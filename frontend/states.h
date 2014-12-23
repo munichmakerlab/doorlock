@@ -1,0 +1,8 @@
+enum States {
+  LOCKED,
+  PIN_ENTRY,
+  UNLOCKED,
+  WAIT_FOR_UNLOCK,
+  INVALID_PIN
+};
+
