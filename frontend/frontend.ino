@@ -36,6 +36,9 @@ byte colPins[COLS] = {8, 7, 6}; //connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(A4, A5, A0, A1, A2, A3);
+
 States state = LOCKED;
 long timeout_start = 0;
 long timeout = 10000;
@@ -43,15 +46,21 @@ long timeout = 10000;
 String buffer = "";
 
 void updateDisplay() {
+  lcd.clear();
   if (state == LOCKED) {
+    /*
     Serial.println("+--------------------+");
     Serial.println("|                    |");
     Serial.println("| Hello Stranger!    |");
     Serial.println("|   Door is locked.  |");
     Serial.println("|                    |");
     Serial.println("+--------------------+");
+    */
+    lcd.print("Hello Stranger! ");
+    lcd.setCursor(0, 1);
+    lcd.print(" Door is locked.");
   } else if (state == PIN_ENTRY) {
-    Serial.println("+--------------------+");
+    /*Serial.println("+--------------------+");
     Serial.println("|Entry token read.   |");
     Serial.println("|Please enter PIN:   |");
     Serial.print("| ");
@@ -64,27 +73,46 @@ void updateDisplay() {
     Serial.println(" |");
     Serial.println("|                    |");
     Serial.println("+--------------------+");
+    */
+    lcd.print("Please enter PIN");
+    lcd.setCursor(0, 1);
+    for (int i = 0; i < buffer.length(); i++) {
+      lcd.print("*");
+    }
   } else if (state == WAIT_FOR_UNLOCK) {
-    Serial.println("+--------------------+");
+    /*Serial.println("+--------------------+");
     Serial.println("|                    |");
     Serial.println("| Waiting for        |");
     Serial.println("|       unlocking    |");
     Serial.println("|                    |");
-    Serial.println("+--------------------+");
+    Serial.println("+--------------------+");*/
+    lcd.print("Waiting for     ");
+    lcd.setCursor(0, 1);
+    lcd.print("   confirmation ");
   } else if (state == INVALID_PIN) {
+    /*
     Serial.println("+--------------------+");
     Serial.println("|                    |");
     Serial.println("| Invalid PIN        |");
     Serial.println("|   Pleas try again. |");
     Serial.println("|                    |");
     Serial.println("+--------------------+");
+    */
+    lcd.print("Invalid PIN     ");
+    lcd.setCursor(0, 1);
+    lcd.print("Please try again");
   } else if (state == UNLOCKED) {
+    /*
     Serial.println("+--------------------+");
     Serial.println("|     Welcome!       |");
     Serial.println("| The space is open. |");
     Serial.println("|                    |");
     Serial.println("| Press 0# to lock.  |");
     Serial.println("+--------------------+");
+    */
+    lcd.print("Space is open   ");
+    lcd.setCursor(0, 1);
+    lcd.print("Press 0# to lock");
   }
 }
 
@@ -104,9 +132,14 @@ void setState(States new_state) {
 }
 
 void setup() {
+  lcd.begin(16, 2);
+  lcd.print("Booting....");
+  
   Serial.begin(9600);		// Initialize serial communications with the PC
+  
   SPI.begin();			// Init SPI bus
   mfrc522.PCD_Init();		// Init MFRC522
+  
   updateDisplay();
 }
 
@@ -183,7 +216,12 @@ void loop() {
       buffer = "";
     }
   } else if (state == INVALID_PIN) {
-    if (timeoutExpired()) {
+    char key = keypad.getKey();
+    if (key) {
+      setState(PIN_ENTRY);
+      buffer = key;
+      updateDisplay();
+    } else if (timeoutExpired()) {
       setState(LOCKED);
     }
   } else {
