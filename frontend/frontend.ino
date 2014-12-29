@@ -43,73 +43,31 @@ States state = LOCKED;
 long timeout_start = 0;
 long timeout = 10000;
 
+String serial_buffer = "";
+String serial_unfinished_line = "";
 String buffer = "";
 
 void updateDisplay() {
   lcd.clear();
   if (state == LOCKED) {
-    /*
-    Serial.println("+--------------------+");
-    Serial.println("|                    |");
-    Serial.println("| Hello Stranger!    |");
-    Serial.println("|   Door is locked.  |");
-    Serial.println("|                    |");
-    Serial.println("+--------------------+");
-    */
     lcd.print("Hello Stranger! ");
     lcd.setCursor(0, 1);
     lcd.print(" Door is locked.");
   } else if (state == PIN_ENTRY) {
-    /*Serial.println("+--------------------+");
-    Serial.println("|Entry token read.   |");
-    Serial.println("|Please enter PIN:   |");
-    Serial.print("| ");
-    for (int i = 0; i < buffer.length(); i++) {
-      Serial.print("*");
-    }
-    for (int i = 0; i < 18-buffer.length(); i++) {
-      Serial.print(" ");
-    }
-    Serial.println(" |");
-    Serial.println("|                    |");
-    Serial.println("+--------------------+");
-    */
     lcd.print("Please enter PIN");
     lcd.setCursor(0, 1);
     for (int i = 0; i < buffer.length(); i++) {
       lcd.print("*");
     }
   } else if (state == WAIT_FOR_UNLOCK) {
-    /*Serial.println("+--------------------+");
-    Serial.println("|                    |");
-    Serial.println("| Waiting for        |");
-    Serial.println("|       unlocking    |");
-    Serial.println("|                    |");
-    Serial.println("+--------------------+");*/
     lcd.print("Waiting for     ");
     lcd.setCursor(0, 1);
     lcd.print("   confirmation ");
   } else if (state == INVALID_PIN) {
-    /*
-    Serial.println("+--------------------+");
-    Serial.println("|                    |");
-    Serial.println("| Invalid PIN        |");
-    Serial.println("|   Pleas try again. |");
-    Serial.println("|                    |");
-    Serial.println("+--------------------+");
-    */
     lcd.print("Invalid PIN     ");
     lcd.setCursor(0, 1);
     lcd.print("Please try again");
   } else if (state == UNLOCKED) {
-    /*
-    Serial.println("+--------------------+");
-    Serial.println("|     Welcome!       |");
-    Serial.println("| The space is open. |");
-    Serial.println("|                    |");
-    Serial.println("| Press 0# to lock.  |");
-    Serial.println("+--------------------+");
-    */
     lcd.print("Space is open   ");
     lcd.setCursor(0, 1);
     lcd.print("Press 0# to lock");
@@ -144,6 +102,31 @@ void setup() {
 }
 
 void loop() {
+  if (Serial.available() > 0) {
+    byte incomingByte = Serial.read();
+    if (incomingByte == '\n') {
+      if (serial_unfinished_line == "PING;") {
+        Serial.println("PONG;");
+      } else if (serial_unfinished_line.startsWith("PONG,")) {
+        String tmp = serial_unfinished_line.substring(5,6);
+        if (tmp == "0") {
+          if (state == UNLOCKED) {
+            setState(LOCKED);
+          }
+        } else if (tmp == "1") {
+          if (state != UNLOCKED) {
+            setState(UNLOCKED);
+          }
+        }
+      } else {
+        serial_buffer = serial_unfinished_line;
+      }
+      serial_unfinished_line = "";
+    } else {
+      serial_unfinished_line += (char)incomingByte;
+    }
+  }
+    
   if (state == LOCKED) {
     // Look for new cards
     if ( ! mfrc522.PICC_IsNewCardPresent()) {
@@ -183,19 +166,13 @@ void loop() {
       }
     }
   } else if (state == WAIT_FOR_UNLOCK) {
-    if (Serial.available() > 0) {
-      byte incomingByte = Serial.read();
-      if (incomingByte == '\n') {
-        Serial.println(buffer);
-        if (buffer == "ACK;") {
-          setState(UNLOCKED);
-        } else {
-          setState(INVALID_PIN);
-        }
+    if (serial_buffer != "") {
+      if (serial_buffer == "ACK;") {
+        setState(UNLOCKED);
       } else {
-        buffer += (char)incomingByte;
-        resetTimeout();
+        setState(INVALID_PIN);
       }
+      serial_buffer = "";
     } else if (timeoutExpired()) {
       setState(LOCKED);
     }
@@ -205,7 +182,7 @@ void loop() {
     if (key) {
       if (key == '#' || key == '*') {
         if (buffer == "0") {
-          Serial.print("LOCK;");
+          Serial.println("LOCK;");
           setState(LOCKED);
         }        
       } else {
@@ -219,7 +196,7 @@ void loop() {
     char key = keypad.getKey();
     if (key) {
       setState(PIN_ENTRY);
-      buffer = key;
+      buffer += key;
       updateDisplay();
     } else if (timeoutExpired()) {
       setState(LOCKED);
@@ -228,12 +205,4 @@ void loop() {
     Serial.println("state not implemented");
     delay(1000);
   }
-      /*
-      // Dump debug info about the card; PICC_HaltA() is automatically called
-        for (byte i = 0; i<mfrc522.uid.size; i++) {
-          Serial.print(mfrc522.uid.uidByte[i],HEX);
-        }
-        mfrc522.PICC_HaltA();
-        Serial.println();
-        */
 }
