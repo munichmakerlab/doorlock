@@ -5,8 +5,8 @@ import logging
 
 # config 
 DATABASE = 'doorlock.db'
-#SERIAL_PORT = '/dev/ttyACM0'
-SERIAL_PORT = 'COM8'
+SERIAL_PORT = '/dev/ttyACM0'
+#SERIAL_PORT = 'COM8'
 
 # regular ping to frontend, every 10 seconds
 # TODO: Add timeout
@@ -41,8 +41,10 @@ ser = serial.Serial(SERIAL_PORT)
 logger.debug("Serial port to frontend opened")
 
 # lock implementation
-from simlock import SimLock
-lock = SimLock()
+#from simlock import SimLock
+#lock = SimLock()
+from motorlock import MotorLock
+lock = MotorLock()
 lock.onStatusChange += statusChange
 
 # start pinging frontend
