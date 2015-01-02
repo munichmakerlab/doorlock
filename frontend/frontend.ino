@@ -107,8 +107,8 @@ void loop() {
     if (incomingByte == '\n') {
       if (serial_unfinished_line == "PING;") {
         Serial.println("PONG;");
-      } else if (serial_unfinished_line.startsWith("PONG,")) {
-        String tmp = serial_unfinished_line.substring(5,6);
+      } else if (serial_unfinished_line.startsWith("STATUS,")) {
+        String tmp = serial_unfinished_line.substring(7,8);
         if (tmp == "0") {
           if (state == UNLOCKED) {
             setState(LOCKED);
