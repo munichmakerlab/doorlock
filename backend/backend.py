@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sqlite3
 import serial
 from threading import Timer
@@ -5,10 +6,14 @@ import logging
 import hashlib
 import os.path
 
+DIR = os.path.dirname(os.path.realpath(__file__))
+
 # config 
-DATABASE = 'doorlock.db'
+DATABASE = DIR + '/doorlock.db'
 SERIAL_PORT = '/dev/ttyACM0'
 DEBUG = False
+LOG_FILENAME = DIR + "/doorlock.log"
+LOG_LEVEL = logging.INFO # Could be e.g. "DEBUG" or "WARNING" 
 
 if os.path.exists("COM8"):
 	SERIAL_PORT = 'COM8'
@@ -38,7 +43,7 @@ def create_hash(text):
 	return h.hexdigest()
 
 # get logger
-logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s', level = logging.INFO)
+logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s', level = LOG_LEVEL, filename = LOG_FILENAME)
 logger = logging.getLogger("doorlock")
 logger.info("Starting doorlock backend")
 
@@ -101,4 +106,7 @@ while 1 == 1:
 	except KeyboardInterrupt:
 		print "Received keyboard interrupt. Stopping..."
 		running = False
-		break		  
+		break
+
+logger.info("Stoping doorlock backend")
+		  

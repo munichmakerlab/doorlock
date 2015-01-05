@@ -7,6 +7,7 @@ class MotorLock():
 		self.locked = True
 		self.onStatusChange = EventHook()
 		self.logger = logging.getLogger("motorlock")
+		GPIO.setwarnings(False)
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setup(4, GPIO.OUT)
 	
