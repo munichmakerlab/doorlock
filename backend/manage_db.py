@@ -135,14 +135,14 @@ elif args.entity == "token":
 			sys.exit(1)
 		
 		# Check whether token is already used
-		t = (args.token,create_hash(args.pin),)
+		t = (args.token,create_hash(args.token + ":" + args.pin),)
 		c.execute("SELECT * FROM dl_tokens WHERE token=? AND pin =?;",t)
 		if c.fetchone() != None:
 			logger.error("Token already exists.")
 			sys.exit(1)
 		
 		# Create token
-		t = (row[0],args.token,create_hash(args.pin),)
+		t = (row[0],args.token,create_hash(args.token + ":" + args.pin),)
 		c.execute("INSERT INTO dl_tokens(person_id, token, pin) VALUES (?,?,?);",t)
 		if c.rowcount == 1:
 			logger.info("Token for '%s' successfully created.", args.person)

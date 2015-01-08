@@ -10,7 +10,7 @@ DIR = os.path.dirname(os.path.realpath(__file__))
 
 # config 
 DATABASE = DIR + '/doorlock.db'
-SERIAL_PORT = '/dev/ttyACM0'
+SERIAL_PORT = '/dev/ttyUSB0'
 DEBUG = False
 LOG_FILENAME = DIR + "/doorlock.log"
 LOG_LEVEL = logging.INFO # Could be e.g. "DEBUG" or "WARNING" 
@@ -76,7 +76,7 @@ while 1 == 1:
 		# Unlock command: "UNLOCK,<token>,<pin>;"
 		# Reply with "ACK;" or "NAK;"
 		if b[0] == "UNLOCK":
-			t = (b[1],create_hash(b[2]))
+			t = (b[1],create_hash(b[1] + ":" + b[2]))
 			c.execute('SELECT p.name from dl_tokens t JOIN dl_persons p ON t.person_id = p.id WHERE t.token=? AND t.pin=? AND p.disabled =0', t)
 			r = c.fetchone()
 			if r != None:
