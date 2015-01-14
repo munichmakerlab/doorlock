@@ -87,7 +87,7 @@ if args.entity == "person":
 	
 	# List all persons
 	elif args.action == "list":
-		c.execute("SELECT p.name Name, p.disabled 'Disabled?', COUNT(t.id) 'No of tokens' from dl_persons p LEFT JOIN dl_tokens t ON t.person_id = p.id GROUP BY p.id ORDER BY p.name;")
+		c.execute("SELECT g.name 'Group', p.name 'Name', p.disabled 'Disabled?', COUNT(t.id) 'No of tokens' FROM (dl_persons p LEFT JOIN dl_tokens t ON t.person_id = p.id) INNER JOIN dl_groups g ON p.group_id = g.id GROUP BY p.id, g.id ORDER BY g.name, p.name;")
 		pt = from_db_cursor(c)
 		print pt
 	
