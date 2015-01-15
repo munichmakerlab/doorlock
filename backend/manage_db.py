@@ -39,6 +39,9 @@ parser_token_add.add_argument("person")
 parser_token_add.add_argument("token")
 parser_token_add.add_argument("pin")
 
+parser_group = parser_subs.add_parser('group', help='a help')
+parser_group_subs = parser_group.add_subparsers(help='sub-command help', dest='action')
+parser_group_list = parser_group_subs.add_parser('list', help='list groups')
 
 args = parser.parse_args()
 
@@ -158,6 +161,12 @@ elif args.entity == "token":
 		else:
 			logger.error("Error while adding token.")
 
+# Group actions
+elif args.entity == "group":
+	if args.action == "list":
+		c.execute("SELECT g.name 'Group', COUNT(p.id) 'No of people', COUNT(t.id) 'No of tokens', g.id 'Group ID' FROM (dl_persons p LEFT JOIN dl_tokens t ON t.person_id = p.id) INNER JOIN dl_groups g ON p.group_id = g.id GROUP BY g.id ORDER BY g.name;")
+		pt = from_db_cursor(c)
+		print pt
 
 conn.commit()
 conn.close()
