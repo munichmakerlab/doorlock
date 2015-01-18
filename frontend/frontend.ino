@@ -147,8 +147,10 @@ void loop() {
     if (key) {
       if (key == '#' || key == '*') {
         Serial.print("UNLOCK,");
+        char tmp[16];
         for (byte i = 0; i<mfrc522.uid.size; i++) {
-          Serial.print(mfrc522.uid.uidByte[i],HEX);
+          sprintf(tmp,"%.2X",mfrc522.uid.uidByte[i]);
+          Serial.print(tmp);
         }
         Serial.print(",");
         Serial.print(buffer);
