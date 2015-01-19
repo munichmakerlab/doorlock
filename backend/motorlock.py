@@ -10,6 +10,7 @@ class MotorLock():
 		GPIO.setwarnings(False)
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setup(4, GPIO.OUT)
+		self.locked = (GPIO.input(4) == GPIO.LOW)
 	
 	def lock(self):
 		if self.locked:
