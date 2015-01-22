@@ -22,6 +22,7 @@ parser_person = parser_subs.add_parser('person', help='a help')
 parser_person_subs = parser_person.add_subparsers(help='sub-command help', dest='action')
 parser_person_create = parser_person_subs.add_parser('create', help='create a new person')
 parser_person_create.add_argument("name")
+parser_person_create.add_argument("group_id")
 parser_person_list = parser_person_subs.add_parser('list', help='list persons')
 parser_person_enable = parser_person_subs.add_parser('enable', help='enable a person to unlock the door')
 parser_person_enable.add_argument("name")
@@ -69,8 +70,16 @@ if args.entity == "person":
 			logger.error("Person '%s' already exists.",args.name)
 			sys.exit(1)
 		
+		# Check whether person already exists
+		t = (args.group_id,)
+		c.execute("SELECT * FROM dl_groups WHERE id=?;",t)
+		if c.fetchone() == None:
+			logger.error("Group '%s' does not exist.",args.group_id)
+			sys.exit(1)
+		
 		# Add new person
-		c.execute("INSERT INTO dl_persons(name, disabled) VALUES (?, '0');",t)
+		t = (args.name, args.group_id,)
+		c.execute("INSERT INTO dl_persons(name, group_id, disabled) VALUES (?, ?, '0');",t)
 		if c.rowcount == 1:
 			logger.info("Person '%s' successfully created.", args.name)
 		else:
@@ -78,7 +87,7 @@ if args.entity == "person":
 	
 	# List all persons
 	elif args.action == "list":
-		c.execute("SELECT p.name Name, p.disabled 'Disabled?', COUNT(t.id) 'No of tokens' from dl_persons p LEFT JOIN dl_tokens t ON t.person_id = p.id GROUP BY p.id;")
+		c.execute("SELECT p.name Name, p.disabled 'Disabled?', COUNT(t.id) 'No of tokens' from dl_persons p LEFT JOIN dl_tokens t ON t.person_id = p.id GROUP BY p.id ORDER BY p.name;")
 		pt = from_db_cursor(c)
 		print pt
 	
