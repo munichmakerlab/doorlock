@@ -37,7 +37,7 @@ byte colPins[COLS] = {8, 7, 6}; //connect to the column pinouts of the keypad
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
 #include <LiquidCrystal.h>
-LiquidCrystal lcd(A4, A5, A0, A1, A2, A3);
+LiquidCrystal lcd(A3, A2, A1, A0, A5, A4);
 
 States state = LOCKED;
 long timeout_start = 0;
