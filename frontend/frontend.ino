@@ -52,27 +52,27 @@ int Epin = A7;
 void updateDisplay() {
   lcd.clear();
   if (state == LOCKED) {
-    lcd.print("Hello Stranger! ");
+    lcd.print("You shall not pass! ");
     lcd.setCursor(0, 1);
-    lcd.print(" Door is locked.");
+    lcd.print("                    ");
   } else if (state == PIN_ENTRY) {
-    lcd.print("Please enter PIN");
+    lcd.print("Enter PIN & press P ");
     lcd.setCursor(0, 1);
     for (int i = 0; i < buffer.length(); i++) {
       lcd.print("*");
     }
   } else if (state == WAIT_FOR_UNLOCK) {
-    lcd.print("Waiting for     ");
+    lcd.print("Waiting for         ");
     lcd.setCursor(0, 1);
-    lcd.print("   confirmation ");
+    lcd.print("       confirmation ");
   } else if (state == INVALID_PIN) {
-    lcd.print("Invalid PIN     ");
+    lcd.print("  > Invalid PIN <   ");
     lcd.setCursor(0, 1);
-    lcd.print("Please try again");
+    lcd.print("> Please try again <");
   } else if (state == UNLOCKED) {
-    lcd.print("Space is open   ");
+    lcd.print("It's open...        ");
     lcd.setCursor(0, 1);
-    lcd.print("Press 0P to lock");
+    lcd.print("Just come on in! =) ");
   }
 }
 
