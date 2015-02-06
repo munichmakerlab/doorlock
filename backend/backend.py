@@ -42,6 +42,9 @@ def create_hash(text):
 	h.update(text)
 	return h.hexdigest()
 
+def ring_doorbell():
+	logger.info("Ring Ring")
+
 # get logger
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s', level = LOG_LEVEL, filename = LOG_FILENAME)
 logger = logging.getLogger("doorlock")
@@ -87,7 +90,10 @@ while 1 == 1:
 				logger.error("Invalid unlock request (%s, %s)", t[0], b[2])
 				ser.write("NAK;\n")
 			ser.flush()
-		
+
+		elif b[0] == "RING":
+			ring_doorbell()	
+	
 		# Lock command "LOCK;"
 		# no reply expected by frontend
 		elif b[0] == "LOCK":

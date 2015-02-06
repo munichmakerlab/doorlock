@@ -26,10 +26,10 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);	// Create MFRC522 instance
 const byte ROWS = 4; //four rows
 const byte COLS = 3; //three columns
 char keys[ROWS][COLS] = {
-  {'1','2','3'},
-  {'4','5','6'},
   {'7','8','9'},
-  {'*','0','#'}
+  {'4','5','6'},
+  {'1','2','3'},
+  {'x','0','P'}
 };
 byte rowPins[ROWS] = {5, 4, 3, 2}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {8, 7, 6}; //connect to the column pinouts of the keypad
@@ -37,7 +37,7 @@ byte colPins[COLS] = {8, 7, 6}; //connect to the column pinouts of the keypad
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
 #include <LiquidCrystal.h>
-LiquidCrystal lcd(A4, A5, A0, A1, A2, A3);
+LiquidCrystal lcd(A3, A2, A1, A0, A5, A4);
 
 States state = LOCKED;
 long timeout_start = 0;
@@ -47,30 +47,32 @@ String serial_buffer = "";
 String serial_unfinished_line = "";
 String buffer = "";
 
+int Epin = A7;
+
 void updateDisplay() {
   lcd.clear();
   if (state == LOCKED) {
-    lcd.print("Hello Stranger! ");
+    lcd.print("You shall not pass! ");
     lcd.setCursor(0, 1);
-    lcd.print(" Door is locked.");
+    lcd.print("                    ");
   } else if (state == PIN_ENTRY) {
-    lcd.print("Please enter PIN");
+    lcd.print("Enter PIN & press P ");
     lcd.setCursor(0, 1);
     for (int i = 0; i < buffer.length(); i++) {
       lcd.print("*");
     }
   } else if (state == WAIT_FOR_UNLOCK) {
-    lcd.print("Waiting for     ");
+    lcd.print("Waiting for         ");
     lcd.setCursor(0, 1);
-    lcd.print("   confirmation ");
+    lcd.print("       confirmation ");
   } else if (state == INVALID_PIN) {
-    lcd.print("Invalid PIN     ");
+    lcd.print("  > Invalid PIN <   ");
     lcd.setCursor(0, 1);
-    lcd.print("Please try again");
+    lcd.print("> Please try again <");
   } else if (state == UNLOCKED) {
-    lcd.print("Space is open   ");
+    lcd.print("It's open...        ");
     lcd.setCursor(0, 1);
-    lcd.print("Press 0# to lock");
+    lcd.print("Just come on in! =) ");
   }
 }
 
@@ -89,17 +91,43 @@ void setState(States new_state) {
   resetTimeout();
 }
 
+bool checkE() {
+ if (analogRead(Epin) < 1000) {
+   return true;
+ }
+ return false;
+} 
+
+void callRing() { 
+  
+  Serial.print("RING;");
+  
+  lcd.clear();
+  lcd.print("Ding     Ding     Ding     Ding     Ding");
+  lcd.setCursor(5, 1);
+  lcd.print("Dong     Dong     Dong     Dong");
+  
+  for (int positionCounter = 0; positionCounter < 20; positionCounter++) {
+    lcd.scrollDisplayLeft();
+    delay(200);
+  }
+  
+  updateDisplay();
+}
+
 void setup() {
-  lcd.begin(16, 2);
+  lcd.begin(20, 2);
   lcd.print("Booting....");
+  delay(500);
   
   Serial.begin(9600);		// Initialize serial communications with the PC
-  
+ 
   SPI.begin();			// Init SPI bus
   mfrc522.PCD_Init();		// Init MFRC522
   
   updateDisplay();
 }
+
 
 void loop() {
   if (Serial.available() > 0) {
@@ -128,6 +156,10 @@ void loop() {
   }
     
   if (state == LOCKED) {
+    if ( checkE() ) {
+      callRing();
+    }
+    
     // Look for new cards
     if ( ! mfrc522.PICC_IsNewCardPresent()) {
       return;
@@ -145,7 +177,7 @@ void loop() {
     char key = keypad.getKey();
     
     if (key) {
-      if (key == '#' || key == '*') {
+      if (key == 'P' || key == 'E') {
         Serial.print("UNLOCK,");
         char tmp[16];
         for (byte i = 0; i<mfrc522.uid.size; i++) {
@@ -179,10 +211,14 @@ void loop() {
       setState(LOCKED);
     }
   } else if (state == UNLOCKED) {
+    if ( checkE() ) {
+      callRing();
+    }
+    
     char key = keypad.getKey();
     
     if (key) {
-      if (key == '#' || key == '*') {
+      if (key == 'P' || key == 'E') {
         if (buffer == "0") {
           Serial.println("LOCK;");
           setState(LOCKED);
