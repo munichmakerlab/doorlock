@@ -7,6 +7,7 @@ import logging
 import hashlib
 import os.path
 from time import sleep
+from datetime import datetime, timedelta
 from sys import exit
 
 DIR = os.path.dirname(os.path.realpath(__file__))
@@ -17,13 +18,13 @@ SERIAL_PORTS = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/ttyUSB3']
 DEBUG = False
 LOG_FILENAME = DIR + "/doorlock.log"
 LOG_LEVEL = logging.DEBUG  # Could be e.g. "DEBUG" or "WARNING"
+PONG_TIMEOUT = 30  #in sec
 
 if os.path.exists("COM8"):
     SERIAL_PORT = 'COM8'
     DEBUG = True
 
-# regular ping to frontend, every 10 seconds
-# TODO: Add timeout
+# regular ping to frontend, every 10 seconds, 30 sec timeout
 running = True
 
 
@@ -32,8 +33,8 @@ def ping():
         return
     ser.write("PING;\n")
     ser.flush()
-    t = Timer(10.0, ping)
-    t.start()
+    timer = Timer(10.0, ping)
+    timer.start()
 
 
 def statusChange():
@@ -58,7 +59,7 @@ def serial_connect():
     for serial_port in SERIAL_PORTS:
         if os.path.exists(serial_port):
             logger.info("Using serial port %s" % serial_port)
-            return serial.Serial(serial_port)
+            return serial.Serial(serial_port, timeout=6)
     logger.error("No valid serial port found. Sleeping and retrying...")
     sleep(60)
     return serial_connect()
@@ -91,12 +92,31 @@ else:
 lock.onStatusChange += statusChange
 
 # start pinging frontend
+last_successful_ping = datetime.now()
 ping()
 
-while 1 == 1:
+
+while True:
     try:
         a = ser.readline()
+        if not a:
+            if last_successful_ping + timedelta(seconds=PONG_TIMEOUT) < datetime.now():
+                logger.warning("Got no PONG from Arduino from %d sec, reinitializing serial port" % PONG_TIMEOUT)
+                try:
+                    ser.close()
+                except Exception as e:
+                    logger.error("Failed to close serial port! Got exception: %s" % str(e))
+                ser = serial_connect()
+                last_successful_ping = datetime.now()
+            continue
+
         b = a.rstrip("\n\r;").split(",")
+        
+        if b == ["PONG"]:
+            last_successful_ping = datetime.now()
+            logger.debug("Got Pong...(%s)" % (str(last_successful_ping)))
+        else:
+            logger.debug(b)
 
         # Unlock command: "UNLOCK,<token>,<pin>;"
         # Reply with "ACK;" or "NAK;"
@@ -148,3 +168,5 @@ while 1 == 1:
         exit(99)
 
 logger.info("Stopping doorlock backend")
+
+
