@@ -107,7 +107,7 @@ while True:
                 except Exception as e:
                     logger.error("Failed to close serial port! Got exception: %s" % str(e))
                 ser = serial_connect()
-				ping()
+                ping()
                 last_successful_ping = datetime.now()
             continue
 
