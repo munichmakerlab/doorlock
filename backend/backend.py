@@ -17,7 +17,7 @@ DATABASE = DIR + '/doorlock.db'
 SERIAL_PORTS = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/ttyUSB3']
 DEBUG = False
 LOG_FILENAME = DIR + "/doorlock.log"
-LOG_LEVEL = logging.DEBUG  # Could be e.g. "DEBUG" or "WARNING"
+LOG_LEVEL = logging.WARNING  # Could be e.g. "DEBUG" or "WARNING"
 PONG_TIMEOUT = 30  #in sec
 
 if os.path.exists("COM8"):
@@ -107,6 +107,7 @@ while True:
                 except Exception as e:
                     logger.error("Failed to close serial port! Got exception: %s" % str(e))
                 ser = serial_connect()
+				ping()
                 last_successful_ping = datetime.now()
             continue
 
