@@ -39,6 +39,9 @@ parser_token_add = parser_token_subs.add_parser('add', help='add a new token')
 parser_token_add.add_argument("person")
 parser_token_add.add_argument("token")
 parser_token_add.add_argument("pin")
+parser_token_reset = parser_token_subs.add_parser('reset', help='reset pin')
+parser_token_reset.add_argument("person")
+parser_token_reset.add_argument("pin")
 
 parser_group = parser_subs.add_parser('group', help='a help')
 parser_group_subs = parser_group.add_subparsers(help='sub-command help', dest='action')
@@ -161,6 +164,32 @@ elif args.entity == "token":
 			logger.info("Token for '%s' successfully created.", args.person)
 		else:
 			logger.error("Error while adding token.")
+	elif args.action == "reset":
+		# Check whether person exists
+                t = (args.person,)
+                c.execute("SELECT id FROM dl_persons WHERE name=?;",t)
+                row = c.fetchone()
+                if row == None:
+                        logger.error("Person '%s' does not exist.", args.person)
+                        sys.exit(1)
+		
+		t = (row[0],)
+		c.execute("SELECT person_id, token FROM dl_tokens WHERE person_id=?;", t)
+		row = c.fetchone()
+		if row != None:
+			if c.fetchone() != None:
+				logger.error("Not implemented.")
+				sys.exit(1)
+
+			logger.info("One token for '%s'found. Changing PIN...", args.person)
+			t = (create_hash(row[1] + ":" + args.pin),row[0],row[1],)
+			c.execute("UPDATE dl_tokens SET pin=? WHERE person_id=? AND token=?;",t)
+			if c.rowcount == 1:
+	                        logger.info("PIN for '%s' successfully updated.", args.person)
+                	else:
+                        	logger.error("Error while updating pin.")
+		else:
+			logger.error("No token found.")
 
 # Group actions
 elif args.entity == "group":
