@@ -17,7 +17,7 @@ DATABASE = DIR + '/doorlock.db'
 SERIAL_PORTS = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/ttyUSB3']
 DEBUG = False
 LOG_FILENAME = DIR + "/doorlock.log"
-LOG_LEVEL = logging.WARNING  # Could be e.g. "DEBUG" or "WARNING"
+LOG_LEVEL = logging.INFO # Could be e.g. "DEBUG" or "WARNING"
 PONG_TIMEOUT = 30  #in sec
 
 if os.path.exists("COM8"):
