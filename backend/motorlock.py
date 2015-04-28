@@ -1,7 +1,7 @@
 from eventhook import EventHook
 import logging
 import RPi.GPIO as GPIO
-
+from time import sleep
 
 class MotorLock():
     def __init__(self):
@@ -14,16 +14,22 @@ class MotorLock():
 	GPIO.setup(18, GPIO.OUT)
 	GPIO.setup(17, GPIO.IN)
         GPIO.setup(21, GPIO.IN)
-	GPIO.add_event_detect(17, GPIO.FALLING, callback = self.button_callback, bouncetime = 300)
-        GPIO.add_event_detect(21, GPIO.FALLING, callback = self.button_callback, bouncetime = 300)
+	GPIO.add_event_detect(17, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
+        GPIO.add_event_detect(21, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
         self.locked = (GPIO.input(4) == GPIO.LOW)
 
     def button_callback(self, channel):
+	self.logger.debug("GPIO button interrupt called on channel " + str(channel))
+	sleep(1)
+	if GPIO.input(channel) == GPIO.HIGH:
+		self.logger.debug("Bounce")
+		return
+
         if channel == 17:
-            self.logger.info("Close button pressed")
+            self.logger.warning("Lock button pressed")
             self.lock()
         elif channel == 21:
-            self.logger.info("Unlock button pressed")
+            self.logger.warning("Unlock button pressed")
             self.unlock()
 
     def lock(self):
