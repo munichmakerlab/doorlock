@@ -1,0 +1,8 @@
+broker = {
+	"hostname": "HOSTNAME_OF_YOUR_MQTT_BROKER",
+	"port": 1883,
+	"user": "MQTT_USERNAME",
+	"password": "MQTT_PASSWORD"
+	}
+
+topic = "mumalab/room/door/status"

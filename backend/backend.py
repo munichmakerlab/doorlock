@@ -9,10 +9,13 @@ import os.path
 from time import sleep
 from datetime import datetime, timedelta
 from sys import exit
+import paho.mqtt.client as paho
+
+import config
 
 DIR = os.path.dirname(os.path.realpath(__file__))
 
-# config 
+# config
 DATABASE = DIR + '/doorlock.db'
 SERIAL_PORTS = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/ttyUSB3']
 DEBUG = False
@@ -40,8 +43,10 @@ def ping():
 def statusChange():
     if lock.isUnlocked():
         ser.write("STATUS,1;\n")
+        mqttc.publish(config.topic, "1", 1, True)
     else:
         ser.write("STATUS,0;\n")
+        mqttc.publish(config.topic, "0", 1, True)
     ser.flush()
 
 
@@ -64,6 +69,23 @@ def serial_connect():
     sleep(60)
     return serial_connect()
 
+# MQTT functions
+def on_connect(mosq, obj, rc):
+	logging.info("Connect with RC " + str(rc))
+
+def on_disconnect(client, userdata, rc):
+	logging.warning("Disconnected (RC " + str(rc) + ")")
+	if rc <> 0:
+		try_reconnect(client)
+
+# MQTT reconnect
+def try_reconnect(client, time = 60):
+	try:
+		logging.info("Trying reconnect")
+		client.reconnect()
+	except:
+		logging.warning("Reconnect failed. Trying again in " + str(time) + " seconds")
+		Timer(time, try_reconnect, [client]).start()
 
 # get logger
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=LOG_LEVEL,
@@ -79,6 +101,16 @@ logger.debug("Database opened")
 # connect to serial port
 ser = serial_connect()
 logger.debug("Serial port to frontend opened")
+
+# initialize MQTT
+logging.info("Initializing MQTT")
+mqttc = paho.Client("mumalab_doorlock")
+mqttc.username_pw_set(config.broker["user"], config.broker["password"])
+mqttc.will_set(config.topic, "?", 1, True)
+mqttc.connect(config.broker["hostname"], config.broker["port"], 60)
+mqttc.on_connect = on_connect
+mqttc.on_disconnect = on_disconnect
+mqttc.loop_start()
 
 # lock implementation
 if DEBUG:
@@ -112,7 +144,7 @@ while True:
             continue
 
         b = a.rstrip("\n\r;").split(",")
-        
+
         if b == ["PONG"]:
             last_successful_ping = datetime.now()
             logger.debug("Got Pong...(%s)" % (str(last_successful_ping)))
@@ -169,5 +201,5 @@ while True:
         exit(99)
 
 logger.info("Stopping doorlock backend")
-
-
+mqttc.loop_stop()
+mqttc.disconnect()
