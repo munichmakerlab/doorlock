@@ -42,6 +42,8 @@ parser_token_add.add_argument("pin")
 parser_token_reset = parser_token_subs.add_parser('reset', help='reset pin')
 parser_token_reset.add_argument("person")
 parser_token_reset.add_argument("pin")
+parser_token_remove = parser_token_subs.add_parser('remove', help='remove a token')
+parser_token_remove.add_argument("token")
 
 parser_group = parser_subs.add_parser('group', help='a help')
 parser_group_subs = parser_group.add_subparsers(help='sub-command help', dest='action')
@@ -190,6 +192,18 @@ elif args.entity == "token":
                         	logger.error("Error while updating pin.")
 		else:
 			logger.error("No token found.")
+        elif args.action == "remove":
+		# Check whether token exists
+		t = (args.token,)
+		c.execute("SELECT id FROM dl_tokens WHERE token=?;",t)
+		row = c.fetchone()
+		if row == None:
+			logger.error("Token '%s' does not exist.", args.token)
+			sys.exit(1)
+
+		logger.info("Removing token '%s'.", args.token)
+		t = (row[0],)
+		c.execute("DELETE FROM dl_tokens WHERE id=?;",t)
 
 # Group actions
 elif args.entity == "group":
