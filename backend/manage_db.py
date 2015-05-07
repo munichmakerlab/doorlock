@@ -32,6 +32,8 @@ parser_person_disable.add_argument("name")
 parser_person_rename = parser_person_subs.add_parser('rename', help='rename a person')
 parser_person_rename.add_argument("old_name")
 parser_person_rename.add_argument("new_name")
+parser_person_show = parser_person_subs.add_parser('show', help='show details about a person')
+parser_person_show.add_argument("name")
 
 parser_token = parser_subs.add_parser('token', help='a help')
 parser_token_subs = parser_token.add_subparsers(help='sub-command help', dest='action')
@@ -139,6 +141,38 @@ if args.entity == "person":
 			logger.info("Person '%s' successfully renamed to '%s'.", args.old_name, args.new_name)
 		else:
 			logger.error("Error while renaming person'%s'.",args.old_name)
+
+	elif args.action == "show":
+		# Check whether person exists
+		t = (args.name,)
+		c.execute("SELECT dl_persons.id, dl_persons.name, dl_groups.name, dl_persons.disabled FROM dl_persons, dl_groups WHERE dl_persons.name=? AND dl_groups.id=dl_persons.group_id;",t)
+		row = c.fetchone()
+		if row == None:
+			logger.error("Person '%s' does not exist.",args.name)
+			sys.exit(1)
+
+		# Print person details
+		name = row[1]
+		group = row[2]
+		if row[3] == 0:
+			status = "ENABLED"
+		else:
+			status = "DISABLED"
+		print name
+		print "=============="
+		print "group:  %s" % group
+		print "status: %s\n" % status
+
+		# Print token list
+		print "Tokens:"
+		t = (row[0],)
+		c.execute("SELECT token FROM dl_tokens WHERE person_id=?;",t)
+		tokenCount = 0
+		for token in c:
+			print "    %s" % token[0]
+			tokenCount = tokenCount + 1
+		if tokenCount == 0:
+			print "    No Tokens"
 
 # Token actions
 elif args.entity == "token":
