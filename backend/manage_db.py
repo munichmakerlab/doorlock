@@ -44,7 +44,8 @@ parser_token_add.add_argument("pin")
 parser_token_reset = parser_token_subs.add_parser('reset', help='reset pin')
 parser_token_reset.add_argument("person")
 parser_token_reset.add_argument("pin")
-parser_token_remove = parser_token_subs.add_parser('remove', help='remove a token')
+parser_token_remove_desc = 'Removes a token from the database. You can find the list of a users tokens by running "person show <name>"'
+parser_token_remove = parser_token_subs.add_parser('remove', help='remove a token', description=parser_token_remove_desc)
 parser_token_remove.add_argument("token")
 
 parser_group = parser_subs.add_parser('group', help='a help')
