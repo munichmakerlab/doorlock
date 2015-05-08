@@ -81,14 +81,14 @@ if args.entity == "person":
 		if c.fetchone() != None:
 			logger.error("Person '%s' already exists.",args.name)
 			sys.exit(1)
-		
+
 		# Check whether person already exists
 		t = (args.group_id,)
 		c.execute("SELECT * FROM dl_groups WHERE id=?;",t)
 		if c.fetchone() == None:
 			logger.error("Group '%s' does not exist.",args.group_id)
 			sys.exit(1)
-		
+
 		# Add new person
 		t = (args.name, args.group_id,)
 		c.execute("INSERT INTO dl_persons(name, group_id, disabled) VALUES (?, ?, '0');",t)
@@ -96,13 +96,13 @@ if args.entity == "person":
 			logger.info("Person '%s' successfully created.", args.name)
 		else:
 			logger.error("Error while creating person'%s'.",args.name)
-	
+
 	# List all persons
 	elif args.action == "list":
 		c.execute("SELECT g.name 'Group', p.name 'Name', p.disabled 'Disabled?', COUNT(t.id) 'No of tokens' FROM (dl_persons p LEFT JOIN dl_tokens t ON t.person_id = p.id) INNER JOIN dl_groups g ON p.group_id = g.id GROUP BY p.id, g.id ORDER BY g.name, p.name;")
 		pt = from_db_cursor(c)
 		print pt
-	
+
 	# Enable / Disable persons
 	elif args.action == "disable" or args.action == "enable":
 		# Check whether person exists
@@ -111,7 +111,7 @@ if args.entity == "person":
 		if c.fetchone() == None:
 			logger.error("Person '%s' does not exist.",args.name)
 			sys.exit(1)
-		
+
 		if args.action == "disable":
 			c.execute("UPDATE dl_persons SET disabled = 1 WHERE name=?;",t)
 		else:
@@ -129,13 +129,13 @@ if args.entity == "person":
 		if c.fetchone() == None:
 			logger.error("Person '%s' does not exist.",args.old_name)
 			sys.exit(1)
-		
+
 		t = (args.new_name,)
 		c.execute("SELECT * FROM dl_persons WHERE name=?;",t)
 		if c.fetchone() != None:
 			logger.error("Person '%s' already exists.",args.new_name)
 			sys.exit(1)
-		
+
 		t = (args.new_name,args.old_name,)
 		c.execute("UPDATE dl_persons SET name = ? WHERE name=?;",t)
 		if c.rowcount == 1:
@@ -186,14 +186,14 @@ elif args.entity == "token":
 		if row == None:
 			logger.error("Person '%s' does not exist.", args.person)
 			sys.exit(1)
-		
+
 		# Check whether token is already used
 		t = (args.token,create_hash(args.token + ":" + args.pin),)
 		c.execute("SELECT * FROM dl_tokens WHERE token=? AND pin =?;",t)
 		if c.fetchone() != None:
 			logger.error("Token already exists.")
 			sys.exit(1)
-		
+
 		# Create token
 		t = (row[0],args.token,create_hash(args.token + ":" + args.pin),)
 		c.execute("INSERT INTO dl_tokens(person_id, token, pin) VALUES (?,?,?);",t)
@@ -201,15 +201,17 @@ elif args.entity == "token":
 			logger.info("Token for '%s' successfully created.", args.person)
 		else:
 			logger.error("Error while adding token.")
+
+	# Set new PIN for an existing token
 	elif args.action == "reset":
 		# Check whether person exists
-                t = (args.person,)
-                c.execute("SELECT id FROM dl_persons WHERE name=?;",t)
-                row = c.fetchone()
-                if row == None:
-                        logger.error("Person '%s' does not exist.", args.person)
-                        sys.exit(1)
-		
+		t = (args.person,)
+		c.execute("SELECT id FROM dl_persons WHERE name=?;",t)
+		row = c.fetchone()
+		if row == None:
+			logger.error("Person '%s' does not exist.", args.person)
+			sys.exit(1)
+
 		t = (row[0],)
 		c.execute("SELECT person_id, token FROM dl_tokens WHERE person_id=?;", t)
 		row = c.fetchone()
@@ -222,12 +224,14 @@ elif args.entity == "token":
 			t = (create_hash(row[1] + ":" + args.pin),row[0],row[1],)
 			c.execute("UPDATE dl_tokens SET pin=? WHERE person_id=? AND token=?;",t)
 			if c.rowcount == 1:
-	                        logger.info("PIN for '%s' successfully updated.", args.person)
-                	else:
-                        	logger.error("Error while updating pin.")
+				logger.info("PIN for '%s' successfully updated.", args.person)
+			else:
+				logger.error("Error while updating pin.")
 		else:
 			logger.error("No token found.")
-        elif args.action == "remove":
+
+	# Remove token
+	elif args.action == "remove":
 		# Check whether token exists
 		t = (args.token,)
 		c.execute("SELECT id FROM dl_tokens WHERE token=?;",t)
@@ -239,6 +243,10 @@ elif args.entity == "token":
 		logger.info("Removing token '%s'.", args.token)
 		t = (row[0],)
 		c.execute("DELETE FROM dl_tokens WHERE id=?;",t)
+		if c.rowcount == 1:
+			logger.info("Token '%s' successfully removed.", args.person)
+		else:
+			logger.error("Error while removing token.")
 
 # Group actions
 elif args.entity == "group":
