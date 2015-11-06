@@ -171,6 +171,18 @@ while True:
         elif b[0] == "RING":
             ring_doorbell()
 
+        # Semi lock command "SEMI_LOCK;"
+        # no reply expected by frontend
+        elif b[0] == "SEMI_LOCK":
+            logger.warning("Semi lock request");
+            lock.lock()
+
+        # Semi unlock command "SEMI_UNLOCK;"
+        # no reply expected by frontend
+        elif b[0] == "SEMI_UNLOCK":
+            logger.warning("Semi unlock request");
+            lock.unlock()
+            
         # Lock command "LOCK;"
         # no reply expected by frontend
         elif b[0] == "LOCK":

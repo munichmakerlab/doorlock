@@ -55,6 +55,10 @@ void updateDisplay() {
     lcd.print("You shall not pass! ");
     lcd.setCursor(0, 1);
     lcd.print("                    ");
+  } else if (state == SEMI_LOCKED) {
+    lcd.print("It's open...        ");
+    lcd.setCursor(0, 1);
+    lcd.print("Press friEnd to enter :)");
   } else if (state == PIN_ENTRY) {
     lcd.print("Enter PIN & press P ");
     lcd.setCursor(0, 1);
@@ -69,7 +73,7 @@ void updateDisplay() {
     lcd.print("  > Invalid PIN <   ");
     lcd.setCursor(0, 1);
     lcd.print("> Please try again <");
-  } else if (state == UNLOCKED) {
+  } else if (state == UNLOCKED || state == SEMI_UNLOCKED) {
     lcd.print("It's open...        ");
     lcd.setCursor(0, 1);
     lcd.print("Just come on in! =) ");
@@ -155,7 +159,21 @@ void loop() {
     }
   }
     
-  if (state == LOCKED) {
+  if (state == SEMI_LOCKED) {
+    if ( checkE() ) {
+      Serial.print("SEMI_UNLOCK;");
+      timeout_start = millis();
+      setState(SEMI_UNLOCKED);  
+    }
+    
+  } else if (state == SEMI_UNLOCKED) {
+    // After the timeout, lock the lab again  
+    if (timeoutExpired()) {
+      Serial.print("SEMI_LOCK;");
+      setState(SEMI_LOCKED);
+    }
+      
+  } else if (state == LOCKED) {
     if ( checkE() ) {
       callRing();
     }
