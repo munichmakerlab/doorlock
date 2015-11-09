@@ -16,7 +16,7 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RST_PIN		9		// 
+#define RST_PIN		9		//
 #define SS_PIN		10		//
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);	// Create MFRC522 instance
@@ -58,7 +58,7 @@ void updateDisplay() {
   } else if (state == SEMI_LOCKED) {
     lcd.print("It's open...        ");
     lcd.setCursor(0, 1);
-    lcd.print("Press friEnd to enter :)");
+    lcd.print("Press E to enter :)");
   } else if (state == PIN_ENTRY) {
     lcd.print("Enter PIN & press P ");
     lcd.setCursor(0, 1);
@@ -100,22 +100,22 @@ bool checkE() {
    return true;
  }
  return false;
-} 
+}
 
-void callRing() { 
-  
+void callRing() {
+
   Serial.print("RING;");
-  
+
   lcd.clear();
   lcd.print("Ding     Ding     Ding     Ding     Ding");
   lcd.setCursor(5, 1);
   lcd.print("Dong     Dong     Dong     Dong");
-  
+
   for (int positionCounter = 0; positionCounter < 20; positionCounter++) {
     lcd.scrollDisplayLeft();
     delay(200);
   }
-  
+
   updateDisplay();
 }
 
@@ -123,12 +123,12 @@ void setup() {
   lcd.begin(20, 2);
   lcd.print("Booting....");
   delay(500);
-  
+
   Serial.begin(9600);		// Initialize serial communications with the PC
- 
+
   SPI.begin();			// Init SPI bus
   mfrc522.PCD_Init();		// Init MFRC522
-  
+
   updateDisplay();
 }
 
@@ -142,12 +142,16 @@ void loop() {
       } else if (serial_unfinished_line.startsWith("STATUS,")) {
         String tmp = serial_unfinished_line.substring(7,8);
         if (tmp == "0") {
-          if (state == UNLOCKED) {
+          if (state != LOCKED) {
             setState(LOCKED);
           }
         } else if (tmp == "1") {
           if (state != UNLOCKED) {
             setState(UNLOCKED);
+          }
+        } else if (tmp == "2") {
+          if (state != SEMI_LOCKED) {
+            setState(SEMI_LOCKED);
           }
         }
       } else {
@@ -158,26 +162,18 @@ void loop() {
       serial_unfinished_line += (char)incomingByte;
     }
   }
-    
+
   if (state == SEMI_LOCKED) {
     if ( checkE() ) {
       Serial.print("SEMI_UNLOCK;");
       timeout_start = millis();
-      setState(SEMI_UNLOCKED);  
+      setState(SEMI_UNLOCKED);
     }
-    
-  } else if (state == SEMI_UNLOCKED) {
-    // After the timeout, lock the lab again  
-    if (timeoutExpired()) {
-      Serial.print("SEMI_LOCK;");
-      setState(SEMI_LOCKED);
-    }
-      
   } else if (state == LOCKED) {
     if ( checkE() ) {
       callRing();
     }
-    
+
     // Look for new cards
     if ( ! mfrc522.PICC_IsNewCardPresent()) {
       return;
@@ -187,13 +183,13 @@ void loop() {
       return;
     }
     mfrc522.PICC_HaltA();
-    
+
     buffer = "";
     setState(PIN_ENTRY);
-    
-  } else if (state == PIN_ENTRY) {  
+
+  } else if (state == PIN_ENTRY) {
     char key = keypad.getKey();
-    
+
     if (key) {
       if (key == 'P' || key == 'E') {
         Serial.print("UNLOCK,");
@@ -206,7 +202,7 @@ void loop() {
         Serial.print(buffer);
         Serial.print(";");
         Serial.println();
-        setState(WAIT_FOR_UNLOCK);        
+        setState(WAIT_FOR_UNLOCK);
       } else {
         buffer += key;
         updateDisplay();
@@ -232,15 +228,15 @@ void loop() {
     if ( checkE() ) {
       callRing();
     }
-    
+
     char key = keypad.getKey();
-    
+
     if (key) {
       if (key == 'P' || key == 'E') {
         if (buffer == "0") {
           Serial.println("LOCK;");
           setState(LOCKED);
-        }        
+        }
       } else {
         buffer += key;
         timeout_start = millis();

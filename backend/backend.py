@@ -10,6 +10,7 @@ from time import sleep
 from datetime import datetime, timedelta
 from sys import exit
 import paho.mqtt.client as paho
+import RPi.GPIO as GPIO
 
 import config
 
@@ -23,13 +24,15 @@ LOG_FILENAME = DIR + "/doorlock.log"
 LOG_LEVEL = logging.INFO # Could be e.g. "DEBUG" or "WARNING"
 PONG_TIMEOUT = 30  #in sec
 
-if os.path.exists("COM8"):
-    SERIAL_PORT = 'COM8'
-    DEBUG = True
+LOCKED = 0
+UNLOCKED = 1
+SEMI = 2
 
 # regular ping to frontend, every 10 seconds, 30 sec timeout
 running = True
 
+lock_status = LOCKED
+semi_timer = None
 
 def ping():
     if not running:
@@ -39,16 +42,45 @@ def ping():
     timer = Timer(10.0, ping)
     timer.start()
 
+def lockDoor():
+    try:
+        semi_timer.cancel()
+    except:
+        pass
+    lock_status = LOCKED
+    lock.lock()
+
+def unlockDoor():
+    if GPIO.input(22):
+        lock_status = SEMI
+        semiUnlockDoor()
+    else:
+        lock_status = UNLOCKED
+        lock.unlock()
+
+def semiLockDoor():
+    lock.lock(semi = True)
+
+def semiUnlockDoor():
+    lock.unlock()
+    semi_timer = Timer(config.semi_timeout, semiLockDoor)
+    semi_timer.start()
 
 def statusChange():
+    sendStatusToFrontend()
     if lock.isUnlocked():
-        ser.write("STATUS,1;\n")
         mqttc.publish(config.topic, "1", 1, True)
     else:
-        ser.write("STATUS,0;\n")
         mqttc.publish(config.topic, "0", 1, True)
-    ser.flush()
 
+def sendStatusToFrontend():
+    if lock.isUnlocked():
+        ser.write("STATUS,1;\n")
+    elif lock_status == SEMI:
+        ser.write("STATUS,2;\n")
+    else:
+        ser.write("STATUS,0;\n")
+    ser.flush()
 
 def create_hash(text):
     h = hashlib.sha256()
@@ -71,21 +103,21 @@ def serial_connect():
 
 # MQTT functions
 def on_connect(mosq, obj, rc):
-	logging.info("Connect with RC " + str(rc))
+    logging.info("Connect with RC " + str(rc))
 
 def on_disconnect(client, userdata, rc):
-	logging.warning("Disconnected (RC " + str(rc) + ")")
-	if rc <> 0:
-		try_reconnect(client)
+    logging.warning("Disconnected (RC " + str(rc) + ")")
+    if rc <> 0:
+        try_reconnect(client)
 
 # MQTT reconnect
 def try_reconnect(client, time = 60):
-	try:
-		logging.info("Trying reconnect")
-		client.reconnect()
-	except:
-		logging.warning("Reconnect failed. Trying again in " + str(time) + " seconds")
-		Timer(time, try_reconnect, [client]).start()
+    try:
+        logging.info("Trying reconnect")
+        client.reconnect()
+    except:
+        logging.warning("Reconnect failed. Trying again in " + str(time) + " seconds")
+        Timer(time, try_reconnect, [client]).start()
 
 # get logger
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=LOG_LEVEL,
@@ -112,6 +144,11 @@ mqttc.on_connect = on_connect
 mqttc.on_disconnect = on_disconnect
 mqttc.loop_start()
 
+# setup GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(22, GPIO.IN)
+
 # lock implementation
 if DEBUG:
     from simlock import SimLock
@@ -121,6 +158,14 @@ else:
     from motorlock import MotorLock
 
     lock = MotorLock()
+
+if lock.locked:
+    lock_status = LOCKED
+elif GPIO.input(22):
+    lock_status = SEMI
+else:
+    lock_status = UNLOCKED
+
 lock.onStatusChange += statusChange
 
 # start pinging frontend
@@ -162,7 +207,7 @@ while True:
             if r != None:
                 logger.warning("Valid unlock request by %s (%s)", r[0], t[0])
                 ser.write("ACK;\n")
-                lock.unlock()
+                unlockDoor()
             else:
                 logger.error("Invalid unlock request (%s, %s)", t[0], b[2])
                 ser.write("NAK;\n")
@@ -171,32 +216,25 @@ while True:
         elif b[0] == "RING":
             ring_doorbell()
 
-        # Semi lock command "SEMI_LOCK;"
-        # no reply expected by frontend
-        elif b[0] == "SEMI_LOCK":
-            logger.warning("Semi lock request");
-            lock.lock()
-
         # Semi unlock command "SEMI_UNLOCK;"
         # no reply expected by frontend
         elif b[0] == "SEMI_UNLOCK":
             logger.warning("Semi unlock request");
-            lock.unlock()
-            
+            if lock_status == SEMI:
+                semiUnlockDoor()
+            else:
+                logger.error("Not in SEMI mode. Something's fishy.");
+
         # Lock command "LOCK;"
         # no reply expected by frontend
         elif b[0] == "LOCK":
             logger.warning("Lock request");
-            lock.lock()
+            lockDoor()
 
         # reply to ping: "PONG;"
         # passing status to frontend afterwards
         elif b[0] == "PONG":
-            if lock.isUnlocked():
-                ser.write("STATUS,1;\n")
-            else:
-                ser.write("STATUS,0;\n")
-            ser.flush()
+            sendStatusToFrontend()
 
     except serial.serialutil.SerialException:
         logger.error("Serial adapter disconnected! Sleeping and trying to reconnect...")

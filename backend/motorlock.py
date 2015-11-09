@@ -11,19 +11,19 @@ class MotorLock():
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(4, GPIO.OUT)
-	GPIO.setup(18, GPIO.OUT)
-	GPIO.setup(17, GPIO.IN)
+        GPIO.setup(18, GPIO.OUT)
+        GPIO.setup(17, GPIO.IN)
         GPIO.setup(21, GPIO.IN)
-	GPIO.add_event_detect(17, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
+        GPIO.add_event_detect(17, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
         GPIO.add_event_detect(21, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
         self.locked = (GPIO.input(4) == GPIO.LOW)
 
     def button_callback(self, channel):
-	self.logger.debug("GPIO button interrupt called on channel " + str(channel))
-	sleep(1)
-	if GPIO.input(channel) == GPIO.HIGH:
-		self.logger.debug("Bounce")
-		return
+        self.logger.debug("GPIO button interrupt called on channel " + str(channel))
+        sleep(1)
+        if GPIO.input(channel) == GPIO.HIGH:
+            self.logger.debug("Bounce")
+            return
 
         if channel == 17:
             self.logger.warning("Lock button pressed")
@@ -32,14 +32,16 @@ class MotorLock():
             self.logger.warning("Unlock button pressed")
             self.unlock()
 
-    def lock(self):
-        if self.locked:
-            self.logger.warning("already locked")
-            return
+    def lock(self, semi = False):
+#        if self.locked:
+#            self.logger.warning("already locked")
+#            return
         self.logger.info("locking...")
         self.locked = True
         GPIO.output(4, GPIO.LOW)
-	GPIO.output(18, GPIO.HIGH)
+        if not semi:
+            GPIO.output(18, GPIO.HIGH)
+
         self.onStatusChange.fire()
 
     def unlock(self):
@@ -47,8 +49,10 @@ class MotorLock():
             self.logger.warn("already unlocked")
         self.logger.info("unlocking...")
         self.locked = False
+
         GPIO.output(4, GPIO.HIGH)
-	GPIO.output(18, GPIO.LOW)
+        GPIO.output(18, GPIO.LOW)
+
         self.onStatusChange.fire()
 
     def isUnlocked(self):
