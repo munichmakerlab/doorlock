@@ -29,7 +29,7 @@ char keys[ROWS][COLS] = {
   {'7','8','9'},
   {'4','5','6'},
   {'1','2','3'},
-  {'x','0','P'}
+  {'E','0','P'}
 };
 byte rowPins[ROWS] = {5, 4, 3, 2}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {8, 7, 6}; //connect to the column pinouts of the keypad
@@ -73,7 +73,7 @@ void updateDisplay() {
     lcd.print("  > Invalid PIN <   ");
     lcd.setCursor(0, 1);
     lcd.print("> Please try again <");
-  } else if (state == UNLOCKED || state == SEMI_UNLOCKED) {
+  } else if (state == UNLOCKED) {
     lcd.print("It's open...        ");
     lcd.setCursor(0, 1);
     lcd.print("Just come on in! =) ");
@@ -167,7 +167,6 @@ void loop() {
     if ( checkE() ) {
       Serial.print("SEMI_UNLOCK;");
       timeout_start = millis();
-      setState(SEMI_UNLOCKED);
     }
   } else if (state == LOCKED) {
     if ( checkE() ) {
