@@ -42,6 +42,7 @@ LiquidCrystal lcd(A3, A2, A1, A0, A5, A4);
 States state = LOCKED;
 long timeout_start = 0;
 long timeout = 10000;
+long debounce = 0;
 
 String serial_buffer = "";
 String serial_unfinished_line = "";
@@ -142,7 +143,7 @@ void loop() {
       } else if (serial_unfinished_line.startsWith("STATUS,")) {
         String tmp = serial_unfinished_line.substring(7,8);
         if (tmp == "0") {
-          if (state != LOCKED) {
+          if (state != LOCKED && state != PIN_ENTRY && state != WAIT_FOR_UNLOCK && state != INVALID_PIN) {
             setState(LOCKED);
           }
         } else if (tmp == "1") {
@@ -163,12 +164,8 @@ void loop() {
     }
   }
 
-  if (state == SEMI_LOCKED) {
-    if ( checkE() ) {
-      Serial.print("SEMI_UNLOCK;");
-      timeout_start = millis();
-    }
-  } else if (state == LOCKED) {
+  
+  if (state == LOCKED) {
     if ( checkE() ) {
       callRing();
     }
@@ -190,7 +187,7 @@ void loop() {
     char key = keypad.getKey();
 
     if (key) {
-      if (key == 'P' || key == 'E') {
+      if (key == 'P' || key == 'x') {
         Serial.print("UNLOCK,");
         char tmp[16];
         for (byte i = 0; i<mfrc522.uid.size; i++) {
@@ -223,11 +220,18 @@ void loop() {
     } else if (timeoutExpired()) {
       setState(LOCKED);
     }
-  } else if (state == UNLOCKED) {
+  } else if ((state == UNLOCKED) || (state == SEMI_LOCKED)) {
     if ( checkE() ) {
-      callRing();
+      if (state == SEMI_LOCKED) {
+        if (millis() - debounce > 500) {
+          Serial.print("SEMI_UNLOCK;");
+          debounce = millis();
+        }
+      } else {
+        callRing();
+      }
     }
-
+    
     char key = keypad.getKey();
 
     if (key) {

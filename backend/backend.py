@@ -51,7 +51,7 @@ def lockDoor():
     lock.lock()
 
 def unlockDoor():
-    if GPIO.input(22):
+    if GPIO.input(22) == GPIO.HIGH:
         lock_status = SEMI
         semiUnlockDoor()
     else:
@@ -145,7 +145,7 @@ mqttc.on_disconnect = on_disconnect
 mqttc.loop_start()
 
 # setup GPIO
-GPIO.setwarnings(False)
+GPIO.setwarnings(True)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(22, GPIO.IN)
 
@@ -161,7 +161,7 @@ else:
 
 if lock.locked:
     lock_status = LOCKED
-elif GPIO.input(22):
+elif GPIO.input(22) == GPIO.HIGH:
     lock_status = SEMI
 else:
     lock_status = UNLOCKED
