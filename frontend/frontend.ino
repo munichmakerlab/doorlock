@@ -4,7 +4,7 @@
  *             Reader/PCD   Uno           Mega      Nano v3
  * Signal      Pin          Pin           Pin       Pin
  * ------------------------------------------------------------
- * RST/Reset   RST          9             5         D9
+ * RST/Reset   RST          2             
  * SPI SS      SDA(SS)      10            53        D10
  * SPI MOSI    MOSI         11 / ICSP-4   51        D11
  * SPI MISO    MISO         12 / ICSP-1   50        D12
@@ -16,7 +16,7 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RST_PIN		9		//
+#define RST_PIN		2		//
 #define SS_PIN		10		//
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);	// Create MFRC522 instance
@@ -53,31 +53,31 @@ int Epin = A7;
 void updateDisplay() {
   lcd.clear();
   if (state == LOCKED) {
-    lcd.print("You shall not pass! ");
+    lcd.print("      YOU       ");
     lcd.setCursor(0, 1);
-    lcd.print("                    ");
+    lcd.print("Shall not pass! ");
   } else if (state == SEMI_LOCKED) {
-    lcd.print("It's open...        ");
+    lcd.print("  It's open...  ");
     lcd.setCursor(0, 1);
-    lcd.print("Press E to enter :)");
+    lcd.print(" E to enter :)  ");
   } else if (state == PIN_ENTRY) {
-    lcd.print("Enter PIN & press P ");
+    lcd.print(" PIN & press P  ");
     lcd.setCursor(0, 1);
     for (int i = 0; i < buffer.length(); i++) {
       lcd.print("*");
     }
   } else if (state == WAIT_FOR_UNLOCK) {
-    lcd.print("Waiting for         ");
+    lcd.print("Waiting for     ");
     lcd.setCursor(0, 1);
-    lcd.print("       confirmation ");
+    lcd.print("   confirmation ");
   } else if (state == INVALID_PIN) {
-    lcd.print("  > Invalid PIN <   ");
+    lcd.print("> Invalid PIN < ");
     lcd.setCursor(0, 1);
-    lcd.print("> Please try again <");
+    lcd.print(">  try again  < ");
   } else if (state == UNLOCKED) {
-    lcd.print("It's open...        ");
+    lcd.print("It's open...    ");
     lcd.setCursor(0, 1);
-    lcd.print("Just come on in! =) ");
+    lcd.print("Just come on in!");
   }
 }
 
