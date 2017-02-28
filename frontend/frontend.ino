@@ -16,7 +16,7 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RST_PIN		2		//
+#define RST_PIN		9		//
 #define SS_PIN		10		//
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);	// Create MFRC522 instance
@@ -31,13 +31,14 @@ char keys[ROWS][COLS] = {
   {'1','2','3'},
   {'E','0','P'}
 };
-byte rowPins[ROWS] = {5, 4, 3, 2}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {8, 7, 6}; //connect to the column pinouts of the keypad
+byte rowPins[ROWS] = {4, 3, 2, 5}; //connect to the row pinouts of the keypad
+byte colPins[COLS] = {6, 7, 8}; //connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
 #include <LiquidCrystal.h>
-LiquidCrystal lcd(A3, A2, A1, A0, A5, A4);
+//LiquidCrystal lcd(A3, A2, A1, A0, A5, A4);
+LiquidCrystal lcd(A3, A2, A1, A0, A4, A5);
 
 States state = LOCKED;
 long timeout_start = 0;
@@ -98,7 +99,7 @@ void setState(States new_state) {
 
 bool checkE() {
  if (analogRead(Epin) < 1000) {
-   return true;
+   //return true;
  }
  return false;
 }
