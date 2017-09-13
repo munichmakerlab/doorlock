@@ -107,9 +107,12 @@ logging.info("Initializing MQTT")
 mqttc = paho.Client("mumalab_doorlock")
 mqttc.username_pw_set(config.broker["user"], config.broker["password"])
 mqttc.will_set(config.topic, "?", 1, True)
-mqttc.connect(config.broker["hostname"], config.broker["port"], 60)
 mqttc.on_connect = on_connect
 mqttc.on_disconnect = on_disconnect
+try:
+    mqttc.connect(config.broker["hostname"], config.broker["port"], 60)
+except Exception as e:
+    logger.error("Failed to connect to MQTT! Got exception: %s" % str(e))
 mqttc.loop_start()
 
 # lock implementation

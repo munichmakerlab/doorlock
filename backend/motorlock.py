@@ -12,10 +12,10 @@ class MotorLock():
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(4, GPIO.OUT)
 	GPIO.setup(18, GPIO.OUT)
-	GPIO.setup(17, GPIO.IN)
-        GPIO.setup(21, GPIO.IN)
-	GPIO.add_event_detect(17, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
-        GPIO.add_event_detect(21, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
+	#GPIO.setup(17, GPIO.IN)
+        #GPIO.setup(21, GPIO.IN)
+	#GPIO.add_event_detect(17, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
+        #GPIO.add_event_detect(21, GPIO.FALLING, callback = self.button_callback, bouncetime = 1000)
         self.locked = (GPIO.input(4) == GPIO.LOW)
 
     def button_callback(self, channel):

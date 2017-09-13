@@ -244,7 +244,7 @@ elif args.entity == "token":
 		t = (row[0],)
 		c.execute("DELETE FROM dl_tokens WHERE id=?;",t)
 		if c.rowcount == 1:
-			logger.info("Token '%s' successfully removed.", args.person)
+			logger.info("Token '%s' successfully removed.", args.token)
 		else:
 			logger.error("Error while removing token.")
 
