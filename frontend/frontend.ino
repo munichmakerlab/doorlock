@@ -12,33 +12,40 @@
  */
 
 #include "states.h"
-
+#include <jm_Wire.h>
+#include <jm_Scheduler.h>
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RST_PIN		9		//
-#define SS_PIN		10		//
+#define RST_PIN    9   //
+#define SS_PIN    10    //
 
-MFRC522 mfrc522(SS_PIN, RST_PIN);	// Create MFRC522 instance
+MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
 #include <Keypad.h>
 
-const byte ROWS = 4; //four rows
-const byte COLS = 3; //three columns
+extern uint16_t twi_readFrom_timeout;
+extern uint16_t twi_writeTo_timeout;
+extern bool twi_readFrom_wait;
+extern bool twi_writeTo_wait;
+
+#include <jm_LiquidCrystal_I2C.h>
+
+
+const byte ROWS = 2; //four rows
+const byte COLS = 8; //three columns
 char keys[ROWS][COLS] = {
-  {'7','8','9'},
-  {'4','5','6'},
-  {'1','2','3'},
-  {'E','0','P'}
+  {'1','L','K','A','2','P','P','P'},
+  {'6','5','4','3','7','8','9','0'}
 };
-byte rowPins[ROWS] = {4, 3, 2, 5}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {6, 7, 8}; //connect to the column pinouts of the keypad
+
+byte rowPins[ROWS] = {7,6}; //connect to the row pinouts of the keypad
+byte colPins[COLS] = {2,3,4,5,8,A0,A1,A2}; //connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
-#include <LiquidCrystal.h>
-//LiquidCrystal lcd(A3, A2, A1, A0, A5, A4);
-LiquidCrystal lcd(A3, A2, A1, A0, A4, A5);
+
+LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7,3,POSITIVE);
 
 States state = LOCKED;
 long timeout_start = 0;
@@ -80,6 +87,7 @@ void updateDisplay() {
     lcd.setCursor(0, 1);
     lcd.print("Just come on in!");
   }
+   while (lcd._i2cio.yield_request()) jm_Scheduler::yield();
 }
 
 bool timeoutExpired() {
@@ -122,20 +130,29 @@ void callRing() {
 }
 
 void setup() {
-  lcd.begin(20, 2);
+  Wire.begin();
+  lcd.init();
+  lcd.begin(20,2);
+  lcd.setCursor(0, 0);
   lcd.print("Booting....");
   delay(500);
 
-  Serial.begin(9600);		// Initialize serial communications with the PC
+  Serial.begin(9600);   // Initialize serial communications with the PC
 
-  SPI.begin();			// Init SPI bus
-  mfrc522.PCD_Init();		// Init MFRC522
+  SPI.begin();      // Init SPI bus
+  mfrc522.PCD_Init();   // Init MFRC522
 
   updateDisplay();
+  
 }
 
 
 void loop() {
+
+ lcd.setCursor(0, 1);
+
+           while (lcd._i2cio.yield_request()) jm_Scheduler::yield();
+  
   if (Serial.available() > 0) {
     byte incomingByte = Serial.read();
     if (incomingByte == '\n') {
@@ -165,20 +182,26 @@ void loop() {
     }
   }
 
+
   
   if (state == LOCKED) {
+   
     if ( checkE() ) {
       callRing();
+    
     }
 
     // Look for new cards
     if ( ! mfrc522.PICC_IsNewCardPresent()) {
+       
       return;
     }
     // Select one of the cards
     if ( ! mfrc522.PICC_ReadCardSerial()) {
+      
       return;
     }
+     
     mfrc522.PICC_HaltA();
 
     buffer = "";
@@ -186,7 +209,7 @@ void loop() {
 
   } else if (state == PIN_ENTRY) {
     char key = keypad.getKey();
-
+  
     if (key) {
       if (key == 'P' || key == 'x') {
         Serial.print("UNLOCK,");
@@ -261,4 +284,5 @@ void loop() {
     Serial.println("state not implemented");
     delay(1000);
   }
+     
 }
