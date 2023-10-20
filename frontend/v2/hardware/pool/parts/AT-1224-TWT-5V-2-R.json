@@ -1,0 +1,44 @@
+{
+    "MPN": [
+        false,
+        "AT-1224-TWT-5V-2-R"
+    ],
+    "datasheet": [
+        false,
+        "https://api.puiaudio.com/file/45d1b913-8cb3-4b39-9d90-6eddd246955a.pdf"
+    ],
+    "description": [
+        false,
+        "5V Transducer / Buzzer"
+    ],
+    "entity": "f2f3e4c5-e38f-420b-8ca6-5ccc0c922a58",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "Pui"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "04d5f170-2abd-41bf-b5a8-b7a87f12e57b",
+    "pad_map": {
+        "1246ab29-f88b-428f-ba98-1fd91cda6b8c": {
+            "gate": "802b98a3-0174-4f96-922e-eabbc696aec6",
+            "pin": "cfa6edd3-a20e-4cbd-b1e2-632a3158f936"
+        },
+        "c666db15-4106-4950-a180-91093736ebea": {
+            "gate": "802b98a3-0174-4f96-922e-eabbc696aec6",
+            "pin": "522b5ea5-90c1-401d-b75c-cd90c6cbbe33"
+        }
+    },
+    "parametric": {},
+    "tags": [
+        "buzzer",
+        "passive"
+    ],
+    "type": "part",
+    "uuid": "11d69f28-c7ff-457b-8562-b96bb347f614",
+    "value": [
+        false,
+        ""
+    ]
+}

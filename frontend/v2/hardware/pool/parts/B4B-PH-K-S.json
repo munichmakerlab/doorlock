@@ -1,0 +1,49 @@
+{
+    "MPN": [
+        false,
+        "B4B-PH-K-S"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "PH Series connector, Vertical, 4 Pin"
+    ],
+    "entity": "64ffe153-20d8-4902-9321-1f18027cb84d",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "JST"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "56201228-c935-4df0-b4ff-ace5d7d78a7f",
+    "pad_map": {
+        "1a813cb1-d3b9-4a7d-a87f-b1973f80d5ee": {
+            "gate": "a96a662e-2077-467f-9853-a01865f76ad6",
+            "pin": "aab503ca-26da-43ff-a268-cf0db0698910"
+        },
+        "94425bb7-0701-4d6c-9ac9-261dfd85aaed": {
+            "gate": "a96a662e-2077-467f-9853-a01865f76ad6",
+            "pin": "4b3e1234-17b7-41dc-af26-90574ec82303"
+        },
+        "abaa015d-a500-49d6-9c93-7d0832a62172": {
+            "gate": "a96a662e-2077-467f-9853-a01865f76ad6",
+            "pin": "423d0d6c-4330-417f-a6f0-267741d4c770"
+        },
+        "ae03c4d5-9f5f-41e9-b585-1260e09dab40": {
+            "gate": "a96a662e-2077-467f-9853-a01865f76ad6",
+            "pin": "9c153b03-fb7b-4f99-a5ed-ca45d3ae512e"
+        }
+    },
+    "parametric": {},
+    "tags": [],
+    "type": "part",
+    "uuid": "70829fed-387d-4e0f-aedf-7f3ca719d39c",
+    "value": [
+        false,
+        ""
+    ]
+}

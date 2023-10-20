@@ -1,0 +1,69 @@
+{
+    "MPN": [
+        false,
+        "SP485EEN-L/TR"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "Enhanced Low Power Half-Duplex RS-485 Transceiver"
+    ],
+    "entity": "58e35efe-b611-4eb6-b66b-8504407e6548",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "MaxLinear"
+    ],
+    "model": "b99785a3-c0da-4658-969d-6287cec3be05",
+    "package": "0932e22e-0cf7-46dc-b09c-4cc761a67608",
+    "pad_map": {
+        "17341892-a120-44e2-97ea-6e4f8e3d7da5": {
+            "gate": "577f5c2b-738e-432f-bb5f-0c53b5fe9690",
+            "pin": "32e91e28-cd66-480e-a4ec-3086df8a4988"
+        },
+        "29f18ab8-6cea-44fc-9bf5-4fb888f5245b": {
+            "gate": "577f5c2b-738e-432f-bb5f-0c53b5fe9690",
+            "pin": "7e3ce0b3-d61b-49c5-8fdc-530b5f29adde"
+        },
+        "3d725e25-0d60-46cb-a21f-82462d3ce156": {
+            "gate": "577f5c2b-738e-432f-bb5f-0c53b5fe9690",
+            "pin": "e122769b-52ff-493d-896a-3f0be6fb0071"
+        },
+        "51d7c05f-acae-46d5-9c26-2ea9d17bf7a8": {
+            "gate": "577f5c2b-738e-432f-bb5f-0c53b5fe9690",
+            "pin": "450d93f7-5d63-46c5-add2-9e7a59dbfc14"
+        },
+        "68b17b6f-ab52-4c2b-9389-c36d3c06eeef": {
+            "gate": "577f5c2b-738e-432f-bb5f-0c53b5fe9690",
+            "pin": "c5cc245a-17c3-4d0f-9473-c5f207f90aa7"
+        },
+        "6f82c7c4-9578-4cb0-a92c-8b09534d5dc9": {
+            "gate": "577f5c2b-738e-432f-bb5f-0c53b5fe9690",
+            "pin": "b860e232-e661-4689-81b8-ca138c36d0cf"
+        },
+        "82d773fb-4473-4bd9-a879-a6ca2756055c": {
+            "gate": "577f5c2b-738e-432f-bb5f-0c53b5fe9690",
+            "pin": "a3aa42f4-09ae-4dd9-9843-37107df107e4"
+        },
+        "b9ad4acf-f78d-438d-8b7b-e83ee0f9cc19": {
+            "gate": "577f5c2b-738e-432f-bb5f-0c53b5fe9690",
+            "pin": "b6c95b09-7f88-4d48-8293-b07e1ee1435e"
+        }
+    },
+    "parametric": {},
+    "tags": [
+        "ic",
+        "rs485",
+        "transceiver"
+    ],
+    "type": "part",
+    "uuid": "9c10b75d-1890-498d-aadd-eba34652e8f4",
+    "value": [
+        false,
+        ""
+    ]
+}

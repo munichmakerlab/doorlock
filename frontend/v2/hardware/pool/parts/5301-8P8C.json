@@ -1,0 +1,65 @@
+{
+    "MPN": [
+        false,
+        "5301-8P8C"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "Plugin Ethernet Connectors/Modular Connectors (RJ45 RJ11)"
+    ],
+    "entity": "771a429f-983f-4758-b6d4-80e107ae9f8e",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "Evercom"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "a047b457-b183-4a9b-b1b1-2efebe880db0",
+    "pad_map": {
+        "050ac29a-a10f-4b92-9d74-3ae370b13bf5": {
+            "gate": "58d54dd5-80b0-4554-9145-748a613a6042",
+            "pin": "e95ff9ae-5dce-4a5d-bc8a-158c688b9a0e"
+        },
+        "3d16a9d4-35b9-4264-b8f7-7904075ee16c": {
+            "gate": "58d54dd5-80b0-4554-9145-748a613a6042",
+            "pin": "01ff6735-94f0-415a-9ce6-55b0515c1cd1"
+        },
+        "4edfbbec-05a1-4c55-bd07-f7a3fda9ddbd": {
+            "gate": "58d54dd5-80b0-4554-9145-748a613a6042",
+            "pin": "1a7a9b72-a0d1-4ee1-91f9-45265c2b41bb"
+        },
+        "a1aae8c5-837b-42b5-9e92-b378f34cf1ec": {
+            "gate": "58d54dd5-80b0-4554-9145-748a613a6042",
+            "pin": "e137d258-e055-4644-b9a5-fad874553ddf"
+        },
+        "a52bf72c-4e54-4a66-9ec5-21474feeaa66": {
+            "gate": "58d54dd5-80b0-4554-9145-748a613a6042",
+            "pin": "fa73ec1a-10bc-4280-aa96-1b222e566826"
+        },
+        "bb655efe-a52d-44a4-bc01-03200c980140": {
+            "gate": "58d54dd5-80b0-4554-9145-748a613a6042",
+            "pin": "3256695a-0b7e-4ed5-a6e6-4f9afb354f54"
+        },
+        "d2506ba8-f644-4df6-aad7-7c1867130188": {
+            "gate": "58d54dd5-80b0-4554-9145-748a613a6042",
+            "pin": "65a73301-97c0-40b6-8138-4fcd12815dc0"
+        },
+        "f04b63bc-5d73-46b1-9e38-721817c5d4dc": {
+            "gate": "58d54dd5-80b0-4554-9145-748a613a6042",
+            "pin": "394fe994-72b0-4e01-9a0b-c463902d55e8"
+        }
+    },
+    "parametric": {},
+    "tags": [],
+    "type": "part",
+    "uuid": "630a1cec-5fe0-4a33-bfa0-2e8da7bf1aba",
+    "value": [
+        false,
+        ""
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "gates": {
+        "2fe97182-b8ab-4091-92d7-bfd171edad94": {
+            "name": "",
+            "suffix": "",
+            "swap_group": 0,
+            "unit": "56f1988d-7cc8-4739-80aa-d9fd27526966"
+        }
+    },
+    "manufacturer": "",
+    "name": "Quad Serial Flash",
+    "prefix": "U",
+    "tags": [
+        "flash"
+    ],
+    "type": "entity",
+    "uuid": "ae540c04-6d4d-40e8-85ee-43455c41904f"
+}

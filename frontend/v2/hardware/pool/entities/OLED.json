@@ -1,0 +1,20 @@
+{
+    "gates": {
+        "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc": {
+            "name": "Main",
+            "suffix": "",
+            "swap_group": 0,
+            "unit": "d013a154-cb52-4ccb-9476-906f84db65c3"
+        }
+    },
+    "manufacturer": "Electronic Assembly",
+    "name": "OLED",
+    "prefix": "U",
+    "tags": [
+        "display",
+        "oled",
+        "spi"
+    ],
+    "type": "entity",
+    "uuid": "ea7e1c6a-bfc1-4e39-8ce9-abb3134a7ae4"
+}

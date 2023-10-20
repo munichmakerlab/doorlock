@@ -1,0 +1,52 @@
+{
+    "MPN": [
+        false,
+        "B0512S-1WR2"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "12V 83mA 4.5V~5.5V DC-DC Plugin Power Module"
+    ],
+    "entity": "77fe6719-f2fc-4469-b6ce-07399767f4ea",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "Dexu Electronics"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "48a03a71-1a6d-4db0-bb0c-536c93edbb6b",
+    "pad_map": {
+        "0414ee60-ce1a-4646-b81a-4d0e02f5a68c": {
+            "gate": "31a3dfa5-0606-400f-9f14-cbf03442f923",
+            "pin": "2f30e0ac-2d8f-4c6a-b433-5443927bcbd3"
+        },
+        "4b0b9695-635e-4be4-adbe-22147960043d": {
+            "gate": "31a3dfa5-0606-400f-9f14-cbf03442f923",
+            "pin": "dd37ec00-ab69-4845-9ee9-19dca62803ea"
+        },
+        "a680a53b-9bf7-4d36-89ae-4f66520570d0": {
+            "gate": "31a3dfa5-0606-400f-9f14-cbf03442f923",
+            "pin": "e927caa4-fd61-4fb4-a360-8bfc7fdbd32b"
+        },
+        "ccd87078-6ce3-4e79-bd46-a8afd45d0ab7": {
+            "gate": "31a3dfa5-0606-400f-9f14-cbf03442f923",
+            "pin": "68616a15-a6e3-4348-aeaf-670ec702f30d"
+        }
+    },
+    "parametric": {},
+    "tags": [
+        "dcdc",
+        "regulator"
+    ],
+    "type": "part",
+    "uuid": "4f9fba7d-7b23-4aed-a536-ecdcd45030bf",
+    "value": [
+        false,
+        ""
+    ]
+}

@@ -1,0 +1,100 @@
+{
+    "MPN": [
+        false,
+        "GT-USB-7010ASV"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "USB 2.0 3A Surface Mount Type C Connector"
+    ],
+    "entity": "b3c7f10f-2160-4b68-a38b-10bf0263c097",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "G-Switch"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "a38a6943-014f-4cb1-bd8f-06bc332bf7b0",
+    "pad_map": {
+        "1303f2c9-fc72-4430-8a99-b23da8e4faf7": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "aee26174-f9f5-43a8-92e1-3ddf20d371b0"
+        },
+        "1d758afd-98ec-4ada-83bf-cff9f7cd8bca": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "b1c2ee2f-b8be-44c0-9561-79a5d9d6bc0b"
+        },
+        "25f53c66-8279-4887-b608-373baaee3509": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "064529f5-6793-469d-8677-c79fcd871f28"
+        },
+        "284e8b7b-ec2b-40b3-9a59-8b6877eeaaeb": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "7a4448f5-517d-4ec6-97f7-aefcdf13e02d"
+        },
+        "5d306aa4-220c-4e05-91e3-6b85ce243a99": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "d9e315ef-20c5-40e4-98ab-e604063682b5"
+        },
+        "66cdf1e8-de09-4517-b1c8-30999005097b": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "aee26174-f9f5-43a8-92e1-3ddf20d371b0"
+        },
+        "6a195da1-372b-4d5a-80e5-78ad14e037ae": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "f075d86c-b10a-412a-b49d-714cc3efcce7"
+        },
+        "6ad3b8af-a7e5-4baa-a842-1705251446be": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "63d5899e-90d1-447c-9eaa-1eaf276e807c"
+        },
+        "85a768d4-0a80-413c-b4d5-0002953af281": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "2717d9e3-9712-4526-8024-6efc1e8e0bc0"
+        },
+        "8b635332-bc4e-451d-bdf0-821ff2e30cef": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "064529f5-6793-469d-8677-c79fcd871f28"
+        },
+        "9dbc272d-a755-4f05-9bd6-3142a701374a": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "7a4448f5-517d-4ec6-97f7-aefcdf13e02d"
+        },
+        "b9f2b728-1da2-437e-b892-716a1b017ba8": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "aee26174-f9f5-43a8-92e1-3ddf20d371b0"
+        },
+        "c4397a0e-8065-4075-a375-f6bed1053306": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "8adefde6-f9b7-4fed-91ee-55089829bb93"
+        },
+        "d4d83339-7179-4f31-9c8f-1ed8e5ba9f4a": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "aee26174-f9f5-43a8-92e1-3ddf20d371b0"
+        },
+        "d9bc492f-6f2a-45c9-8571-09fc2a446f4e": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "2717d9e3-9712-4526-8024-6efc1e8e0bc0"
+        },
+        "eac23a5c-95e7-48e6-8f3f-7478711af57d": {
+            "gate": "c8b7918e-fbf3-4d3d-9629-7888c2542a58",
+            "pin": "b1c2ee2f-b8be-44c0-9561-79a5d9d6bc0b"
+        }
+    },
+    "parametric": {},
+    "tags": [
+        "connector",
+        "usb"
+    ],
+    "type": "part",
+    "uuid": "d414a121-69d3-4b53-9dda-eaa33e40439c",
+    "value": [
+        false,
+        ""
+    ]
+}

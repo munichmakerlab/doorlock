@@ -1,0 +1,48 @@
+{
+    "MPN": [
+        false,
+        "K7805-500"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "5V 500mA 6V~36V DC-DC Plugin Power Modules ROHS"
+    ],
+    "entity": "1d0055e8-b654-4bb9-b3e2-5ad87079ecca",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "Dexu Electronics"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "091a52ea-e87d-4327-ad13-e4eaf72694f4",
+    "pad_map": {
+        "9ba0fa3e-42dd-4046-accd-7a08476ece37": {
+            "gate": "8b4c20d8-37fd-40a5-8239-db8803c0baa0",
+            "pin": "20f0495c-5e6e-4975-b440-1399ca09d3c3"
+        },
+        "bada3eb9-a662-4155-b54f-1a580812cc95": {
+            "gate": "8b4c20d8-37fd-40a5-8239-db8803c0baa0",
+            "pin": "559d5e91-2169-486b-9ece-8db9867957dd"
+        },
+        "e2974539-8d20-4e27-81bb-62348cab8acd": {
+            "gate": "8b4c20d8-37fd-40a5-8239-db8803c0baa0",
+            "pin": "304699c2-7433-4b03-ad2c-c8df631dd06f"
+        }
+    },
+    "parametric": {},
+    "tags": [
+        "dcdc",
+        "th"
+    ],
+    "type": "part",
+    "uuid": "472df596-5990-4fee-a474-74f756960bd8",
+    "value": [
+        false,
+        ""
+    ]
+}

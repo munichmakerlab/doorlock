@@ -1,0 +1,41 @@
+{
+    "MPN": [
+        false,
+        "B2B-PH-K-S"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "PH Series connector, Vertical, 2 Pin"
+    ],
+    "entity": "29f544a1-a789-4fe6-a1ef-29da5ba3d371",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "JST"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "af06d841-15df-496d-b280-2af788fcbe81",
+    "pad_map": {
+        "abaa015d-a500-49d6-9c93-7d0832a62172": {
+            "gate": "eb7f68b1-6fba-4a35-a470-2cecb23fe087",
+            "pin": "b3cef4f5-fe6c-45b5-b063-1618f997168f"
+        },
+        "ae03c4d5-9f5f-41e9-b585-1260e09dab40": {
+            "gate": "eb7f68b1-6fba-4a35-a470-2cecb23fe087",
+            "pin": "588536f1-9e96-4500-bcbb-4ba48082b643"
+        }
+    },
+    "parametric": {},
+    "tags": [],
+    "type": "part",
+    "uuid": "f1b34670-a5aa-4bf0-9d6b-b05849755fe8",
+    "value": [
+        false,
+        ""
+    ]
+}
