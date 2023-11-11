@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "lockbsp",
+    "lockfw",
+]
+resolver = "2"

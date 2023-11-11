@@ -1,0 +1,10 @@
+[package]
+name = "lockbsp"
+version = "1.0.0"
+edition = "2021"
+resolver = "2"
+
+[dependencies]
+cortex-m-rt = "0.7.3"
+rp2040-boot2 = "0.3.0"
+rp2040-hal = { version = "0.9.0", features = ["critical-section-impl"] }
