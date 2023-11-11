@@ -1,0 +1,137 @@
+{
+    "MPN": [
+        false,
+        "EA OLEDM128-6"
+    ],
+    "datasheet": [
+        false,
+        "https://www.lcd-module.com/fileadmin/eng/pdf/grafik/oledm128-6e.pdf"
+    ],
+    "description": [
+        false,
+        "128x64 OLED Display Module"
+    ],
+    "entity": "ea7e1c6a-bfc1-4e39-8ce9-abb3134a7ae4",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "Electronic Assembly"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "8423819e-9d50-44ce-9f18-f93ed6bced93",
+    "pad_map": {
+        "027cb010-394d-4393-9a1a-df1cf548b834": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "805c99b5-7f74-4ba2-a9c3-ba5a6433b7c9"
+        },
+        "02caa8e3-1104-48ad-a44d-8b3a4a8306c7": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "61c880cd-e925-40b9-a0ac-c50babb046ea"
+        },
+        "1faa74a1-2c20-4a4a-9963-b6dc5c906da0": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "61c880cd-e925-40b9-a0ac-c50babb046ea"
+        },
+        "20c4fb23-7b9f-46bc-a6af-3d649d35de2f": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "bc23a46e-1bd3-4cd7-8700-06eac5a62048"
+        },
+        "219add91-2ea5-4457-b44e-ce29009cc14d": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "bc23a46e-1bd3-4cd7-8700-06eac5a62048"
+        },
+        "282fe78c-ac8c-43fc-a5e6-3e36c7c0a7f8": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "a32b6765-e2b3-46e7-a3eb-b312cc71f279"
+        },
+        "3ff79e2b-35c9-4406-983d-59c605d6f561": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "a32b6765-e2b3-46e7-a3eb-b312cc71f279"
+        },
+        "4f1ca467-f4d0-4819-a34f-5929f7ac3cbe": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "06be9fdd-75fa-410e-bbc9-4cf02eb23165"
+        },
+        "54f717cb-b497-4258-99e8-01c80fa4e51f": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "7e04d134-8547-4b0d-9811-50787af24e21"
+        },
+        "615c7aa9-086b-4fa2-b546-76cf03f65575": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "a7229065-fec8-4948-9f99-c1b295f5753f"
+        },
+        "624be8bd-85b8-4696-aacc-785e8ed0b11c": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "80384959-f094-44e8-a193-4ed65c11408e"
+        },
+        "67d22502-a7a2-4729-afb6-fe67753256ab": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "61c880cd-e925-40b9-a0ac-c50babb046ea"
+        },
+        "734e7a92-a52b-4c77-9ad4-956b4a849c17": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "d006fa9c-f791-42df-9b65-64812f216245"
+        },
+        "74aa9309-5883-4ecd-8c7a-ad2464050591": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "284ec306-e10e-4124-a522-00fde9d6ef3f"
+        },
+        "8a5cf6e4-9f70-47d4-b6f1-2975e57f9312": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "bc23a46e-1bd3-4cd7-8700-06eac5a62048"
+        },
+        "98e3bec7-eac2-41e7-a1af-e09f5f42655a": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "61c880cd-e925-40b9-a0ac-c50babb046ea"
+        },
+        "98ea9da3-f644-47ec-b397-4b6a807ad64b": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "284ec306-e10e-4124-a522-00fde9d6ef3f"
+        },
+        "9c45f53d-a731-4615-b564-775e2590e0ea": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "805c99b5-7f74-4ba2-a9c3-ba5a6433b7c9"
+        },
+        "accd04dd-6543-4774-a214-5c7f086daf39": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "6b67a698-7e9d-467b-b845-96ab506919bf"
+        },
+        "acd72608-f197-48ee-ad74-9fe8a358eb9f": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "bc23a46e-1bd3-4cd7-8700-06eac5a62048"
+        },
+        "afaed916-0a76-4d0a-8524-6216bf56b3ab": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "e0088d65-7f3d-4e9c-8e05-7bf3dd73518c"
+        },
+        "c210b1e5-ef6e-4b4c-ba13-2ec506e9a532": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "5705e9a8-33bb-48bc-8b21-00110224b83c"
+        },
+        "d490ed67-486e-4703-96c8-7b506557262f": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "0f698d19-4c36-4797-9be6-e1b2fc615a80"
+        },
+        "dc828b68-3ef9-4f1c-af94-07841871bd6f": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "a32b6765-e2b3-46e7-a3eb-b312cc71f279"
+        },
+        "ec5ec99b-ab03-44cd-be48-94002be075a9": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "d3c6e863-d0cf-4789-b2a5-17dd299847b6"
+        },
+        "ed795356-b8b4-454a-a0b5-fe3b41142bb6": {
+            "gate": "08b8d40c-5497-4fb8-8c5c-f4f0096d29dc",
+            "pin": "a32b6765-e2b3-46e7-a3eb-b312cc71f279"
+        }
+    },
+    "parametric": {},
+    "tags": [],
+    "type": "part",
+    "uuid": "c42aac5a-613c-48d8-9f3c-aded0661d9fa",
+    "value": [
+        false,
+        ""
+    ]
+}

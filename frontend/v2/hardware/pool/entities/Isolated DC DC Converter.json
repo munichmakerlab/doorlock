@@ -1,0 +1,20 @@
+{
+    "gates": {
+        "31a3dfa5-0606-400f-9f14-cbf03442f923": {
+            "name": "Main",
+            "suffix": "",
+            "swap_group": 0,
+            "unit": "deea5b39-4b75-403a-a4f7-b9ee4f4e78a5"
+        }
+    },
+    "manufacturer": "",
+    "name": "Isolated DC/DC Converter",
+    "prefix": "U",
+    "tags": [
+        "dcdc",
+        "power",
+        "regulator"
+    ],
+    "type": "entity",
+    "uuid": "77fe6719-f2fc-4469-b6ce-07399767f4ea"
+}

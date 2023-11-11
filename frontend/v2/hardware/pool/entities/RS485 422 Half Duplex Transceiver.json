@@ -1,0 +1,20 @@
+{
+    "gates": {
+        "577f5c2b-738e-432f-bb5f-0c53b5fe9690": {
+            "name": "Main",
+            "suffix": "",
+            "swap_group": 0,
+            "unit": "3e58dc61-6859-4255-b5ba-84635dd4a23a"
+        }
+    },
+    "manufacturer": "Generic",
+    "name": "RS485/422 Half Duplex Transceiver",
+    "prefix": "U",
+    "tags": [
+        "ic",
+        "rs485",
+        "transceiver"
+    ],
+    "type": "entity",
+    "uuid": "58e35efe-b611-4eb6-b66b-8504407e6548"
+}

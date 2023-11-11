@@ -1,0 +1,73 @@
+{
+    "MPN": [
+        false,
+        "B10B-PH-K-S"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "PH Series connector, Vertical, 10 Pin"
+    ],
+    "entity": "504f4bfc-0750-4221-89bb-1160fc2e6ee7",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "JST"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "78b148c4-9909-4cfe-a1ac-e6acbf0407d7",
+    "pad_map": {
+        "1a813cb1-d3b9-4a7d-a87f-b1973f80d5ee": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "c4b28d29-3d36-426c-9e96-e3c874a781ac"
+        },
+        "3a5cf954-7cbd-47f2-9429-81ac84ef4938": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "3db7fe02-604e-4960-b2b1-0578f4782512"
+        },
+        "47a42295-92c6-40fe-a01d-8e020f1dd2c5": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "4c3f7b77-060a-4cc8-9589-5b33c9d3b678"
+        },
+        "4dba81f4-5143-42af-b8d7-3621cba6987c": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "7222169d-2694-4b74-ae22-5ad906606f99"
+        },
+        "94425bb7-0701-4d6c-9ac9-261dfd85aaed": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "d1f34c2f-6541-401e-b843-81befc8d8f93"
+        },
+        "99bcdd26-0bff-48d2-b9b0-c2ff8c3e3d85": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "aa3df9df-f618-49c4-bbe4-36d4757a60ba"
+        },
+        "a86326f9-b81c-4877-a8f7-ed5f1781ed06": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "1cca2e10-ef16-4885-9ecc-9ee7fdbb7a4a"
+        },
+        "abaa015d-a500-49d6-9c93-7d0832a62172": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "38db3294-dfc3-430b-92a1-2a1187c442ab"
+        },
+        "ae03c4d5-9f5f-41e9-b585-1260e09dab40": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "f776e830-d17f-422f-adac-e6e5ebaee545"
+        },
+        "eac7ec87-54ae-48dc-8884-2c07f5bbfd2f": {
+            "gate": "d0030b61-eea7-40e5-bb04-e8914c4f57d4",
+            "pin": "63a2f649-839c-488c-8d87-bfae6388ef1a"
+        }
+    },
+    "parametric": {},
+    "tags": [],
+    "type": "part",
+    "uuid": "34fb45b9-ea6a-4aa6-9e2f-c58d262c7a6d",
+    "value": [
+        false,
+        ""
+    ]
+}

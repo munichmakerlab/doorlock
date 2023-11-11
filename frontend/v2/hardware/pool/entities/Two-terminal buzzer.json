@@ -1,0 +1,20 @@
+{
+    "gates": {
+        "802b98a3-0174-4f96-922e-eabbc696aec6": {
+            "name": "Main",
+            "suffix": "",
+            "swap_group": 0,
+            "unit": "989e9d31-85ec-4f8d-800d-949d81ec4405"
+        }
+    },
+    "manufacturer": "",
+    "name": "Two-terminal buzzer",
+    "prefix": "BUZ",
+    "tags": [
+        "buzzer",
+        "generic",
+        "passive"
+    ],
+    "type": "entity",
+    "uuid": "f2f3e4c5-e38f-420b-8ca6-5ccc0c922a58"
+}

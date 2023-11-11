@@ -1,0 +1,56 @@
+{
+    "manufacturer": "Generix",
+    "name": "RS485/422 Half Duplex Transceiver",
+    "pins": {
+        "32e91e28-cd66-480e-a4ec-3086df8a4988": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "~RE",
+            "swap_group": 0
+        },
+        "450d93f7-5d63-46c5-add2-9e7a59dbfc14": {
+            "direction": "output",
+            "names": [],
+            "primary_name": "RO",
+            "swap_group": 0
+        },
+        "7e3ce0b3-d61b-49c5-8fdc-530b5f29adde": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "DI",
+            "swap_group": 0
+        },
+        "a3aa42f4-09ae-4dd9-9843-37107df107e4": {
+            "direction": "bidirectional",
+            "names": [],
+            "primary_name": "A",
+            "swap_group": 0
+        },
+        "b6c95b09-7f88-4d48-8293-b07e1ee1435e": {
+            "direction": "power_input",
+            "names": [],
+            "primary_name": "VCC",
+            "swap_group": 0
+        },
+        "b860e232-e661-4689-81b8-ca138c36d0cf": {
+            "direction": "power_input",
+            "names": [],
+            "primary_name": "GND",
+            "swap_group": 0
+        },
+        "c5cc245a-17c3-4d0f-9473-c5f207f90aa7": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "DE",
+            "swap_group": 0
+        },
+        "e122769b-52ff-493d-896a-3f0be6fb0071": {
+            "direction": "bidirectional",
+            "names": [],
+            "primary_name": "B",
+            "swap_group": 0
+        }
+    },
+    "type": "unit",
+    "uuid": "3e58dc61-6859-4255-b5ba-84635dd4a23a"
+}

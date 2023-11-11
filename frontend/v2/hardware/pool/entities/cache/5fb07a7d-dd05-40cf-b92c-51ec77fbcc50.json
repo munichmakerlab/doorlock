@@ -1,0 +1,19 @@
+{
+    "gates": {
+        "7d7b5be0-94cd-4c98-a625-f40e5330f43c": {
+            "name": "Main",
+            "suffix": "",
+            "swap_group": 0,
+            "unit": "63610d58-f36c-4b1e-8e45-b3678e8970c0"
+        }
+    },
+    "manufacturer": "Raspberry Pi Ltd",
+    "name": "RP2040",
+    "prefix": "U",
+    "tags": [
+        "arm",
+        "mcu"
+    ],
+    "type": "entity",
+    "uuid": "5fb07a7d-dd05-40cf-b92c-51ec77fbcc50"
+}

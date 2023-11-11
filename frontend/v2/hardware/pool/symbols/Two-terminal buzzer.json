@@ -1,0 +1,166 @@
+{
+    "arcs": {
+        "3595b655-9701-480e-97be-df843e3dab02": {
+            "center": "beb9aa44-5c8e-4441-95a3-5a04392d0ad4",
+            "from": "439e0d31-ba51-4189-aa17-3b259f9f8ea1",
+            "layer": 0,
+            "to": "1e135099-249d-49e3-884a-aa5c0a49fd26",
+            "width": 0
+        }
+    },
+    "can_expand": false,
+    "junctions": {
+        "1e135099-249d-49e3-884a-aa5c0a49fd26": {
+            "position": [
+                3749995,
+                4800000
+            ]
+        },
+        "439e0d31-ba51-4189-aa17-3b259f9f8ea1": {
+            "position": [
+                -3749995,
+                4800000
+            ]
+        },
+        "588d31c3-e056-468d-8d8b-7dc5a84954c0": {
+            "position": [
+                -1250000,
+                0
+            ]
+        },
+        "65b925ee-7d47-45a9-9ea3-0cffc29e2a51": {
+            "position": [
+                -1250000,
+                1250000
+            ]
+        },
+        "6a44347a-bb63-4928-bcc2-dc54e71d1e14": {
+            "position": [
+                1250000,
+                0
+            ]
+        },
+        "82c7088c-249f-4c80-9252-15dd1d1a3688": {
+            "position": [
+                2500000,
+                0
+            ]
+        },
+        "96b12c8c-3fa5-4197-b185-4253c00f8427": {
+            "position": [
+                1250000,
+                1250000
+            ]
+        },
+        "beb9aa44-5c8e-4441-95a3-5a04392d0ad4": {
+            "position": [
+                0,
+                4800000
+            ]
+        },
+        "de267f1c-559b-498f-8892-267e790ce3ab": {
+            "position": [
+                -2500000,
+                0
+            ]
+        }
+    },
+    "lines": {
+        "0abae2ce-0efa-466e-9337-7cf3aa0550f7": {
+            "from": "439e0d31-ba51-4189-aa17-3b259f9f8ea1",
+            "layer": 0,
+            "to": "1e135099-249d-49e3-884a-aa5c0a49fd26",
+            "width": 0
+        },
+        "b55cf946-fcf2-4e9f-bf43-bac92abb9f0b": {
+            "from": "65b925ee-7d47-45a9-9ea3-0cffc29e2a51",
+            "layer": 0,
+            "to": "588d31c3-e056-468d-8d8b-7dc5a84954c0",
+            "width": 0
+        },
+        "df5b3af8-6f8c-44c7-a82e-41b422f99fdf": {
+            "from": "96b12c8c-3fa5-4197-b185-4253c00f8427",
+            "layer": 0,
+            "to": "6a44347a-bb63-4928-bcc2-dc54e71d1e14",
+            "width": 0
+        }
+    },
+    "name": "Two-terminal buzzer",
+    "pins": {
+        "522b5ea5-90c1-401d-b75c-cd90c6cbbe33": {
+            "decoration": {
+                "clock": false,
+                "dot": false,
+                "driver": "default",
+                "schmitt": false
+            },
+            "length": 2500000,
+            "name_orientation": "in_line",
+            "name_visible": false,
+            "orientation": "right",
+            "pad_visible": false,
+            "position": [
+                3750000,
+                0
+            ]
+        },
+        "cfa6edd3-a20e-4cbd-b1e2-632a3158f936": {
+            "decoration": {
+                "clock": false,
+                "dot": false,
+                "driver": "default",
+                "schmitt": false
+            },
+            "length": 2500000,
+            "name_orientation": "in_line",
+            "name_visible": false,
+            "orientation": "left",
+            "pad_visible": false,
+            "position": [
+                -3750000,
+                0
+            ]
+        }
+    },
+    "polygons": {},
+    "text_placements": {},
+    "texts": {
+        "9a787e50-7dbf-4288-a28b-4eafad0d6bd0": {
+            "font": "simplex",
+            "from_smash": false,
+            "layer": 0,
+            "origin": "center",
+            "placement": {
+                "angle": 0,
+                "mirror": false,
+                "shift": [
+                    -5000000,
+                    6250000
+                ]
+            },
+            "size": 1500000,
+            "text": "$REFDES",
+            "width": 0
+        },
+        "ae68ed1d-064e-4a9c-a643-33d26204243e": {
+            "font": "simplex",
+            "from_smash": false,
+            "layer": 0,
+            "origin": "center",
+            "placement": {
+                "angle": 0,
+                "mirror": false,
+                "shift": [
+                    -5000000,
+                    -1250000
+                ]
+            },
+            "size": 1500000,
+            "text": "$VALUE",
+            "width": 0
+        }
+    },
+    "type": "symbol",
+    "unit": "989e9d31-85ec-4f8d-800d-949d81ec4405",
+    "uuid": "c6b35e72-8532-4eed-8932-c7eaef47b7d8"
+}

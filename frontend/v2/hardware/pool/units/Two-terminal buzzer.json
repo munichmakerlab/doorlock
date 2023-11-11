@@ -1,0 +1,20 @@
+{
+    "manufacturer": "",
+    "name": "Two-terminal buzzer",
+    "pins": {
+        "522b5ea5-90c1-401d-b75c-cd90c6cbbe33": {
+            "direction": "passive",
+            "names": [],
+            "primary_name": "B",
+            "swap_group": 0
+        },
+        "cfa6edd3-a20e-4cbd-b1e2-632a3158f936": {
+            "direction": "passive",
+            "names": [],
+            "primary_name": "A",
+            "swap_group": 0
+        }
+    },
+    "type": "unit",
+    "uuid": "989e9d31-85ec-4f8d-800d-949d81ec4405"
+}

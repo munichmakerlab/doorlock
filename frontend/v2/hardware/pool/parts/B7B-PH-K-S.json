@@ -1,0 +1,61 @@
+{
+    "MPN": [
+        false,
+        "B7B-PH-K-S"
+    ],
+    "datasheet": [
+        false,
+        ""
+    ],
+    "description": [
+        false,
+        "PH Series connector, Vertical, 7 Pin"
+    ],
+    "entity": "3163122e-5414-47a0-aa58-449d007268d4",
+    "inherit_model": true,
+    "inherit_tags": false,
+    "manufacturer": [
+        false,
+        "JST"
+    ],
+    "model": "00000000-0000-0000-0000-000000000000",
+    "package": "5d15c3e8-65c3-4602-9607-6802f7e6f974",
+    "pad_map": {
+        "1a813cb1-d3b9-4a7d-a87f-b1973f80d5ee": {
+            "gate": "5abc16ba-5d27-46bc-8b0f-7b7685a3d36b",
+            "pin": "914b4eaf-67d5-4e01-a13c-0a4ba5a97ead"
+        },
+        "3a5cf954-7cbd-47f2-9429-81ac84ef4938": {
+            "gate": "5abc16ba-5d27-46bc-8b0f-7b7685a3d36b",
+            "pin": "a52796ce-980b-44da-b500-0e16047002e7"
+        },
+        "94425bb7-0701-4d6c-9ac9-261dfd85aaed": {
+            "gate": "5abc16ba-5d27-46bc-8b0f-7b7685a3d36b",
+            "pin": "ab526400-99a9-42e4-a5d2-1581085f6494"
+        },
+        "a86326f9-b81c-4877-a8f7-ed5f1781ed06": {
+            "gate": "5abc16ba-5d27-46bc-8b0f-7b7685a3d36b",
+            "pin": "b2f80675-5fe9-4e98-bcdc-31ea9a03298b"
+        },
+        "abaa015d-a500-49d6-9c93-7d0832a62172": {
+            "gate": "5abc16ba-5d27-46bc-8b0f-7b7685a3d36b",
+            "pin": "b5dfa031-2240-4c92-bc28-efe9bcca12e9"
+        },
+        "ae03c4d5-9f5f-41e9-b585-1260e09dab40": {
+            "gate": "5abc16ba-5d27-46bc-8b0f-7b7685a3d36b",
+            "pin": "330b9d38-3926-4721-acef-c9aa1ab6e4bd"
+        },
+        "eac7ec87-54ae-48dc-8884-2c07f5bbfd2f": {
+            "gate": "5abc16ba-5d27-46bc-8b0f-7b7685a3d36b",
+            "pin": "14621993-a769-4155-a79f-3d6baec8bfab"
+        }
+    },
+    "parametric": {},
+    "tags": [],
+    "type": "part",
+    "uuid": "b2177a84-5805-444e-afb1-e581f16fa784",
+    "value": [
+        false,
+        ""
+    ]
+}

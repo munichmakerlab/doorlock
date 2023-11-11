@@ -1,0 +1,98 @@
+{
+    "manufacturer": "Electronic Assembly",
+    "name": "OLED",
+    "pins": {
+        "06be9fdd-75fa-410e-bbc9-4cf02eb23165": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "D2",
+            "swap_group": 0
+        },
+        "0f698d19-4c36-4797-9be6-e1b2fc615a80": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "D/C",
+            "swap_group": 0
+        },
+        "284ec306-e10e-4124-a522-00fde9d6ef3f": {
+            "direction": "power_input",
+            "names": [],
+            "primary_name": "ESD_GND",
+            "swap_group": 0
+        },
+        "5705e9a8-33bb-48bc-8b21-00110224b83c": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "BS1",
+            "swap_group": 0
+        },
+        "61c880cd-e925-40b9-a0ac-c50babb046ea": {
+            "direction": "power_input",
+            "names": [],
+            "primary_name": "VCC",
+            "swap_group": 0
+        },
+        "6b67a698-7e9d-467b-b845-96ab506919bf": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "~CS",
+            "swap_group": 0
+        },
+        "7e04d134-8547-4b0d-9811-50787af24e21": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "D1",
+            "swap_group": 0
+        },
+        "80384959-f094-44e8-a193-4ed65c11408e": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "~RES",
+            "swap_group": 0
+        },
+        "805c99b5-7f74-4ba2-a9c3-ba5a6433b7c9": {
+            "direction": "bidirectional",
+            "names": [],
+            "primary_name": "Vcomh",
+            "swap_group": 0
+        },
+        "a32b6765-e2b3-46e7-a3eb-b312cc71f279": {
+            "direction": "not_connected",
+            "names": [],
+            "primary_name": "MECH",
+            "swap_group": 0
+        },
+        "a7229065-fec8-4948-9f99-c1b295f5753f": {
+            "direction": "power_input",
+            "names": [],
+            "primary_name": "VDD",
+            "swap_group": 0
+        },
+        "bc23a46e-1bd3-4cd7-8700-06eac5a62048": {
+            "direction": "power_input",
+            "names": [],
+            "primary_name": "GND",
+            "swap_group": 0
+        },
+        "d006fa9c-f791-42df-9b65-64812f216245": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "BS0",
+            "swap_group": 0
+        },
+        "d3c6e863-d0cf-4789-b2a5-17dd299847b6": {
+            "direction": "input",
+            "names": [],
+            "primary_name": "D0",
+            "swap_group": 0
+        },
+        "e0088d65-7f3d-4e9c-8e05-7bf3dd73518c": {
+            "direction": "output",
+            "names": [],
+            "primary_name": "Iref",
+            "swap_group": 0
+        }
+    },
+    "type": "unit",
+    "uuid": "d013a154-cb52-4ccb-9476-906f84db65c3"
+}
