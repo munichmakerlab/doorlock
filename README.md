@@ -99,6 +99,18 @@ python backend/prune_cancelled_members.py [--db path/to/doorlock.db] [--csv path
 - Use `--yes` to skip the selector and disable all stale members automatically.
 - On confirmation it flips `dl_persons.disabled` to `1` for the selected entries (tokens remain but are unusable because the person is disabled).
 
+## Rename Members CLI
+
+For ad-hoc name corrections, use [backend/rename_members.py](backend/rename_members.py).
+
+``` bash
+python backend/rename_members.py [--db path/to/doorlock.db]
+```
+
+- TTY-only curses UI showing all members with status and token counts.
+- Navigate with arrows, press `f` to search by name (case-insensitive), press `space` on a highlighted entry to rename: you will be prompted (outside the UI) for new last name, then first name, then confirmation showing old → new.
+- If the name is unchanged or already taken, nothing is updated. Successful renames write directly to `dl_persons` and return you to the list.
+
 Typical workflow:
 
 ``` bash

@@ -6,5 +6,3 @@ broker = {
 	}
 
 topic = "mumalab/room/door/status"
-
-semi_timeout = 15
