@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
 import sqlite3
 import serial
 from threading import Timer
@@ -11,7 +10,7 @@ from datetime import datetime, timedelta
 from sys import exit
 import paho.mqtt.client as paho
 
-import config
+import settings
 
 DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -20,8 +19,8 @@ DATABASE = DIR + '/doorlock.db'
 SERIAL_PORTS = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/ttyUSB3']
 DEBUG = False
 LOG_FILENAME = DIR + "/doorlock.log"
-LOG_LEVEL = logging.INFO # Could be e.g. "DEBUG" or "WARNING"
-PONG_TIMEOUT = 30  #in sec
+LOG_LEVEL = logging.INFO
+PONG_TIMEOUT = 30  # in sec
 
 if os.path.exists("COM8"):
     SERIAL_PORT = 'COM8'
@@ -34,7 +33,7 @@ running = True
 def ping():
     if not running:
         return
-    ser.write("PING;\n")
+    ser.write(b"PING;\n")
     ser.flush()
     timer = Timer(10.0, ping)
     timer.start()
@@ -42,17 +41,21 @@ def ping():
 
 def statusChange():
     if lock.isUnlocked():
-        ser.write("STATUS,1;\n")
-        mqttc.publish(config.topic, "1", 1, True)
+        ser.write(b"STATUS,1;\n")
+        mqttc.publish(settings.MQTT_TOPIC, "1", 1, True)
     else:
-        ser.write("STATUS,0;\n")
-        mqttc.publish(config.topic, "0", 1, True)
+        ser.write(b"STATUS,0;\n")
+        mqttc.publish(settings.MQTT_TOPIC, "0", 1, True)
     ser.flush()
+
+
+def feedback(topic, state):
+    mqttc.publish("%s/%s" % (settings.MQTT_FEEDBACK_TOPIC, topic), str(state), 1, False)
 
 
 def create_hash(text):
     h = hashlib.sha256()
-    h.update(text)
+    h.update(text.encode("utf-8"))
     return h.hexdigest()
 
 
@@ -69,23 +72,27 @@ def serial_connect():
     sleep(60)
     return serial_connect()
 
-# MQTT functions
-def on_connect(mosq, obj, rc):
-	logging.info("Connect with RC " + str(rc))
 
-def on_disconnect(client, userdata, rc):
-	logging.warning("Disconnected (RC " + str(rc) + ")")
-	if rc <> 0:
-		try_reconnect(client)
+# MQTT functions
+def on_connect(client, userdata, flags, reason_code, properties=None):
+    logging.info("Connect with RC " + str(reason_code))
+
+
+def on_disconnect(client, userdata, flags, reason_code, properties=None):
+    logging.warning("Disconnected (RC " + str(reason_code) + ")")
+    if reason_code != 0:
+        try_reconnect(client)
+
 
 # MQTT reconnect
-def try_reconnect(client, time = 60):
-	try:
-		logging.info("Trying reconnect")
-		client.reconnect()
-	except:
-		logging.warning("Reconnect failed. Trying again in " + str(time) + " seconds")
-		Timer(time, try_reconnect, [client]).start()
+def try_reconnect(client, time=60):
+    try:
+        logging.info("Trying reconnect")
+        client.reconnect()
+    except Exception:
+        logging.warning("Reconnect failed. Trying again in " + str(time) + " seconds")
+        Timer(time, try_reconnect, [client]).start()
+
 
 # get logger
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=LOG_LEVEL,
@@ -104,13 +111,13 @@ logger.debug("Serial port to frontend opened")
 
 # initialize MQTT
 logging.info("Initializing MQTT")
-mqttc = paho.Client("mumalab_doorlock")
-mqttc.username_pw_set(config.broker["user"], config.broker["password"])
-mqttc.will_set(config.topic, "?", 1, True)
+mqttc = paho.Client(paho.CallbackAPIVersion.VERSION2, "mumalab_doorlock")
+mqttc.username_pw_set(settings.MQTT_USERNAME, settings.MQTT_PASSWORD)
+mqttc.will_set(settings.MQTT_TOPIC, "?", 1, True)
 mqttc.on_connect = on_connect
 mqttc.on_disconnect = on_disconnect
 try:
-    mqttc.connect(config.broker["hostname"], config.broker["port"], 60)
+    mqttc.connect(settings.MQTT_HOSTNAME, settings.MQTT_PORT, 60)
 except Exception as e:
     logger.error("Failed to connect to MQTT! Got exception: %s" % str(e))
 mqttc.loop_start()
@@ -118,13 +125,15 @@ mqttc.loop_start()
 # lock implementation
 if DEBUG:
     from simlock import SimLock
-
     lock = SimLock()
 else:
-    from motorlock import MotorLock
+    # from motorlock import MotorLock
+    # lock = MotorLock()
+    from zuko_wifi_lock import ZukoLock
+    lock = ZukoLock()
 
-    lock = MotorLock()
 lock.onStatusChange += statusChange
+lock.onFeedback += feedback
 
 # start pinging frontend
 last_successful_ping = datetime.now()
@@ -146,7 +155,8 @@ while True:
                 last_successful_ping = datetime.now()
             continue
 
-        b = a.rstrip("\n\r;").split(",")
+        line = a.decode("ascii", errors="replace")
+        b = line.rstrip("\n\r;").split(",")
 
         if b == ["PONG"]:
             last_successful_ping = datetime.now()
@@ -162,31 +172,29 @@ while True:
                 'SELECT p.name from dl_tokens t JOIN dl_persons p ON t.person_id = p.id WHERE t.token=? AND t.pin=? AND p.disabled =0',
                 t)
             r = c.fetchone()
-            if r != None:
+            if r is not None:
                 logger.warning("Valid unlock request by %s (%s)", r[0], t[0])
-                ser.write("ACK;\n")
+                ser.write(b"ACK;\n")
                 lock.unlock()
             else:
                 logger.error("Invalid unlock request (%s, %s)", t[0], b[2])
-                ser.write("NAK;\n")
+                ser.write(b"NAK;\n")
             ser.flush()
 
         elif b[0] == "RING":
             ring_doorbell()
 
         # Lock command "LOCK;"
-        # no reply expected by frontend
         elif b[0] == "LOCK":
-            logger.warning("Lock request");
+            logger.warning("Lock request")
             lock.lock()
 
         # reply to ping: "PONG;"
-        # passing status to frontend afterwards
         elif b[0] == "PONG":
             if lock.isUnlocked():
-                ser.write("STATUS,1;\n")
+                ser.write(b"STATUS,1;\n")
             else:
-                ser.write("STATUS,0;\n")
+                ser.write(b"STATUS,0;\n")
             ser.flush()
 
     except serial.serialutil.SerialException:
@@ -195,7 +203,7 @@ while True:
         ser = serial_connect()
 
     except KeyboardInterrupt:
-        print "Received keyboard interrupt. Stopping..."
+        print("Received keyboard interrupt. Stopping...")
         running = False
         break
 

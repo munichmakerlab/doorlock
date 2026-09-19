@@ -3,3 +3,8 @@
 COM*
 env
 *.log
+.env
+.env.*
+!.env.example
+backend/config.py
+.vscode
