@@ -21,6 +21,10 @@
                       +----+                                        
 ```
 
+## Doorlock editor
+
+There is a terminal-based (TUI) management tool available as well. Check out the dedicated repository for details: [doorlock-edit](https://github.com/munichmakerlab/doorlock-edit)
+
 ## Database Management CLI
 
 The backend ships with `backend/manage_db.py`, a small CLI helper around the `doorlock.db` SQLite database. It creates the schema on first run (by executing `doorlock.db.sql`) and offers person/token lifecycle tooling that mirrors the firmware expectations.
