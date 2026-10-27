@@ -1,8 +1,10 @@
-broker = {
-	"hostname": "HOSTNAME_OF_YOUR_MQTT_BROKER",
-	"port": 1883,
-	"user": "MQTT_USERNAME",
-	"password": "MQTT_PASSWORD"
-	}
-
-topic = "mumalab/room/door/status"
+# MQTT configuration currently not needed (Oct. 2026)
+#
+# broker = {
+# 	"hostname": "HOSTNAME_OF_YOUR_MQTT_BROKER",
+# 	"port": 1883,
+# 	"user": "MQTT_USERNAME",
+# 	"password": "MQTT_PASSWORD"
+# 	}
+#
+# topic = "mumalab/room/door/status"

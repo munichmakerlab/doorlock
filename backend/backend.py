@@ -8,9 +8,9 @@ import os.path
 from time import sleep
 from datetime import datetime, timedelta
 from sys import exit
-import paho.mqtt.client as paho
+# import paho.mqtt.client as paho
 
-import config
+# import config
 
 DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -42,15 +42,15 @@ def ping():
 def statusChange():
     if lock.isUnlocked():
         ser.write(b"STATUS,1;\n")
-        mqttc.publish(config.topic, "1", 1, True)
+        # mqttc.publish(config.topic, "1", 1, True)
     else:
         ser.write(b"STATUS,0;\n")
-        mqttc.publish(config.topic, "0", 1, True)
+        # mqttc.publish(config.topic, "0", 1, True)
     ser.flush()
 
 
-def feedback(topic, state):
-    mqttc.publish("%s/%s" % (config.feedback_topic, topic), str(state), 1, False)
+# def feedback(topic, state):
+#     mqttc.publish("%s/%s" % (config.feedback_topic, topic), str(state), 1, False)
 
 
 def create_hash(text):
@@ -74,24 +74,24 @@ def serial_connect():
 
 
 # MQTT functions
-def on_connect(client, userdata, flags, reason_code, properties=None):
-    logging.info("Connect with RC " + str(reason_code))
+# def on_connect(client, userdata, flags, reason_code, properties=None):
+#     logging.info("Connect with RC " + str(reason_code))
 
 
-def on_disconnect(client, userdata, flags, reason_code, properties=None):
-    logging.warning("Disconnected (RC " + str(reason_code) + ")")
-    if reason_code != 0:
-        try_reconnect(client)
+# def on_disconnect(client, userdata, flags, reason_code, properties=None):
+#    logging.warning("Disconnected (RC " + str(reason_code) + ")")
+#    if reason_code != 0:
+#        try_reconnect(client)
 
 
 # MQTT reconnect
-def try_reconnect(client, time=60):
-    try:
-        logging.info("Trying reconnect")
-        client.reconnect()
-    except Exception:
-        logging.warning("Reconnect failed. Trying again in " + str(time) + " seconds")
-        Timer(time, try_reconnect, [client]).start()
+# def try_reconnect(client, time=60):
+#    try:
+#        logging.info("Trying reconnect")
+#        client.reconnect()
+#    except Exception:
+#        logging.warning("Reconnect failed. Trying again in " + str(time) + " seconds")
+#        Timer(time, try_reconnect, [client]).start()
 
 
 # get logger
@@ -110,17 +110,17 @@ ser = serial_connect()
 logger.debug("Serial port to frontend opened")
 
 # initialize MQTT
-logging.info("Initializing MQTT")
-mqttc = paho.Client(paho.CallbackAPIVersion.VERSION2, "mumalab_doorlock")
-mqttc.username_pw_set(config.broker["user"], config.broker["password"])
-mqttc.will_set(config.topic, "?", 1, True)
-mqttc.on_connect = on_connect
-mqttc.on_disconnect = on_disconnect
-try:
-    mqttc.connect(config.broker["hostname"], config.broker["port"], 60)
-except Exception as e:
-    logger.error("Failed to connect to MQTT! Got exception: %s" % str(e))
-mqttc.loop_start()
+# logging.info("Initializing MQTT")
+# mqttc = paho.Client(paho.CallbackAPIVersion.VERSION2, "mumalab_doorlock")
+# mqttc.username_pw_set(config.broker["user"], config.broker["password"])
+# mqttc.will_set(config.topic, "?", 1, True)
+# mqttc.on_connect = on_connect
+# mqttc.on_disconnect = on_disconnect
+# try:
+#     mqttc.connect(config.broker["hostname"], config.broker["port"], 60)
+# except Exception as e:
+#    logger.error("Failed to connect to MQTT! Got exception: %s" % str(e))
+# mqttc.loop_start()
 
 # lock implementation
 if DEBUG:
@@ -133,7 +133,7 @@ else:
     lock = ZukoLock()
 
 lock.onStatusChange += statusChange
-lock.onFeedback += feedback
+# lock.onFeedback += feedback
 
 # start pinging frontend
 last_successful_ping = datetime.now()
@@ -212,5 +212,5 @@ while True:
         exit(99)
 
 logger.info("Stopping doorlock backend")
-mqttc.loop_stop()
-mqttc.disconnect()
+# mqttc.loop_stop()
+# mqttc.disconnect()
