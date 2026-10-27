@@ -6,3 +6,8 @@ env
 
 # macOS
 .DS_Store
+
+.env
+.env.*
+!.env.example
+.vscode

@@ -70,9 +70,11 @@ void updateDisplay() {
     lcd.setCursor(0, 1);
     lcd.print("> Please try again <");
   } else if (state == UNLOCKED) {
-    lcd.print("It's open...        ");
+    lcd.print("Door is unlocked.   ");
+    // lcd.print("It's open...        ");
     lcd.setCursor(0, 1);
-    lcd.print("Just come on in! =) ");
+    lcd.print("Pull it and come in!");
+    // lcd.print("Just come on in! =) ");
   }
 }
 
